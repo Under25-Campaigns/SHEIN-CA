@@ -117,42 +117,74 @@ document
    CREATOR CARD RENDERING
 =========================================================== */
 
-function renderCreatorCards(list) {
+function renderCreatorCards(creators){
+
     const container =
-        document.getElementById("creatorContainer");
+    document.getElementById("creatorContainer");
+
     container.innerHTML = "";
-    const template =
-        document.getElementById("creatorTemplate");
-    list.forEach(creator => {
-        const node =
-            template.content.cloneNode(true);
-        const card =
-            node.querySelector(".creatorCard");
-        card.dataset.creatorID =
-            creator.creatorID;
-        node.querySelector(".creatorName").innerHTML =
-            creator.name;
-        const insta =
-            node.querySelector(".creatorInstagram");
-        insta.innerHTML =
-            "@" + creator.instagram;
-        insta.href =
-            "https://instagram.com/" +
-            creator.instagram;
-        const reel1 =
-            node.querySelector(".reel1");
-        const reel2 =
-            node.querySelector(".reel2");
-        const reel3 =
-            node.querySelector(".reel3");
-     reel1.innerHTML =
-    reelHTML(creator, creator.reel1,1);
-reel2.innerHTML =
-    reelHTML(creator, creator.reel2,2);
-reel3.innerHTML =
-    reelHTML(creator, creator.reel3,3);
-        container.appendChild(node);
+
+    creators.forEach(creator=>{
+
+        let html = `
+
+        <div class="creatorSection">
+
+            <div class="creatorSectionHeader">
+
+                <div>
+
+                    <div class="creatorSectionName">
+
+                        👤 ${creator.name}
+
+                    </div>
+
+                    <div class="creatorSectionInstagram">
+
+                        <a href="https://instagram.com/${creator.instagram}"
+                           target="_blank">
+
+                            @${creator.instagram}
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        `;
+
+        html += buildCARow(
+            creator,
+            creator.reel1,
+            1
+        );
+
+        html += buildCARow(
+            creator,
+            creator.reel2,
+            2
+        );
+
+        html += buildCARow(
+            creator,
+            creator.reel3,
+            3
+        );
+
+        html += `
+
+        </div>
+
+        `;
+
+        container.innerHTML += html;
+
     });
+
 }
 
 
