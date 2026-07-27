@@ -180,7 +180,9 @@ function reelHTML(creator, reel, reelNumber) {
         <div class="reelRowContent">
             <div>
                 <div class="reelHeading">
-                    Reel ${reel.reelNumber}
+                    Reel ${reel.exists
+? reel.reelNumber
+: reelNumber}
                 </div>
                 ${badge}
             </div>
@@ -202,7 +204,9 @@ function reelHTML(creator, reel, reelNumber) {
     <div class="reelRowContent">
         <div>
             <div class="reelHeading">
-                Reel ${reel.reelNumber}
+                Reel ${reel.exists
+? reel.reelNumber
+: reelNumber}
             </div>
             <span class="status notSubmitted">
                 Not Submitted
@@ -213,7 +217,9 @@ function reelHTML(creator, reel, reelNumber) {
                 class="submitButton"
                 onclick="openReelModal(
                 '${creator.creatorID}',
-                ${reel.reelNumber}
+                ${reel.exists
+? reel.reelNumber
+: reelNumber}
                 )"
             >
                 Submit Reel
