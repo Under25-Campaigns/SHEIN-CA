@@ -118,7 +118,7 @@ document
    CREATOR CARD RENDERING
 =========================================================== */
 
-function renderCreatorCards(creators){function renderCreatorCards(creators){
+function renderCreatorCards(creators){
 
     const container =
         document.getElementById("creatorContainer");
@@ -492,7 +492,7 @@ function clearCreatorForm() {
    ADD CREATOR
 =========================================================== */
 
-async function addCreator() {async function addCreator(){
+async function addCreator(){
 
     const button =
         document.getElementById("addCreatorButton");
@@ -609,10 +609,12 @@ function openReelModal(
 function closeReelModal(){
     CURRENT_CREATOR = null;
     CURRENT_REEL = null;
+    CURRENT_REEL_NUMBER = null;
     document
         .getElementById("reelModal")
         .classList
         .add("hidden");
+
 }
 
 
