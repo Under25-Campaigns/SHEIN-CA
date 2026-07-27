@@ -2,6 +2,7 @@ let SESSION = null;
 let CREATORS = [];
 let CURRENT_CREATOR = null;
 let CURRENT_REEL = null;
+let CURRENT_REEL_NUMBER = null;
 
 /* ===========================================================
    INITIALIZE
@@ -553,7 +554,7 @@ function openReelModal(
     reelNumber
 ){
     CURRENT_CREATOR = creatorID;
-    CURRENT_REEL = reelNumber;
+    CURRENT_REEL_NUMBER = reelNumber;
     document
         .getElementById("reelLink")
         .value = "";
