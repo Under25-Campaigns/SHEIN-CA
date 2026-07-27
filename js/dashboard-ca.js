@@ -187,6 +187,162 @@ function renderCreatorCards(creators){
 
 }
 
+function buildCARow(
+creator,
+reel,
+reelNumber
+){
+
+    if(!reel.exists){
+
+        return `
+
+        <div class="creatorReelRow">
+
+            <div class="creatorReelTitle">
+
+                Reel ${reelNumber}
+
+            </div>
+
+            <div class="creatorReelStatus statusEmpty">
+
+                Not Submitted
+
+            </div>
+
+            <div class="creatorReelActions">
+
+                <button
+                    class="reviewButton"
+                    onclick="openReelModal(
+                    '${creator.creatorID}',
+                    ${reelNumber}
+                    )">
+
+                    Submit Reel
+
+                </button>
+
+            </div>
+
+        </div>
+
+        `;
+
+    }
+
+    if(reel.status=="APPROVED"){
+
+        return `
+
+        <div class="creatorReelRow">
+
+            <div class="creatorReelTitle">
+
+                Reel ${reelNumber}
+
+            </div>
+
+            <div class="creatorReelStatus statusApproved">
+
+                Approved
+
+            </div>
+
+            <div class="creatorReelActions">
+
+                <a
+                href="${reel.link}"
+                target="_blank"
+                class="viewReelButton">
+
+                    View Reel
+
+                </a>
+
+            </div>
+
+        </div>
+
+        `;
+
+    }
+
+    if(reel.status=="PENDING"){
+
+        return `
+
+        <div class="creatorReelRow">
+
+            <div class="creatorReelTitle">
+
+                Reel ${reelNumber}
+
+            </div>
+
+            <div class="creatorReelStatus statusPending">
+
+                Pending Approval
+
+            </div>
+
+            <div class="creatorReelActions">
+
+                <a
+                href="${reel.link}"
+                target="_blank"
+                class="viewReelButton">
+
+                    View Reel
+
+                </a>
+
+            </div>
+
+        </div>
+
+        `;
+
+    }
+
+    return `
+
+    <div class="creatorReelRow">
+
+        <div class="creatorReelTitle">
+
+            Reel ${reelNumber}
+
+        </div>
+
+        <div class="creatorReelStatus statusRejected">
+
+            Rejected
+
+        </div>
+
+        <div class="creatorReelActions">
+
+            <button
+                class="reviewButton"
+                onclick="openReelModal(
+                '${creator.creatorID}',
+                ${reelNumber}
+                )">
+
+                Resubmit
+
+            </button>
+
+        </div>
+
+    </div>
+
+    `;
+
+}
+
 
 /* ===========================================================
    REEL HTML
