@@ -145,12 +145,12 @@ function renderCreatorCards(list) {
             node.querySelector(".reel2");
         const reel3 =
             node.querySelector(".reel3");
-        reel1.innerHTML =
-            reelHTML(creator, creator.reel1);
-        reel2.innerHTML =
-            reelHTML(creator, creator.reel2);
-        reel3.innerHTML =
-            reelHTML(creator, creator.reel3);
+     reel1.innerHTML =
+    reelHTML(creator, creator.reel1,1);
+reel2.innerHTML =
+    reelHTML(creator, creator.reel2,2);
+reel3.innerHTML =
+    reelHTML(creator, creator.reel3,3);
         container.appendChild(node);
     });
 }
@@ -160,7 +160,7 @@ function renderCreatorCards(list) {
    REEL HTML
 =========================================================== */
 
-function reelHTML(creator, reel) {
+function reelHTML(creator, reel, reelNumber) {
     if (reel.exists) {
         let badge = "";
         if (reel.status === "APPROVED") {
