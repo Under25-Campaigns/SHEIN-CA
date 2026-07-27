@@ -1,1 +1,221 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Inter,Segoe UI,sans-serif;
+}
 
+body{
+    overflow:hidden;
+    background:#000;
+}
+
+.background{
+    position:fixed;
+    inset:0;
+    background:url("../assets/background.jpg") center center/cover no-repeat;
+    transform:scale(1.05);
+}
+
+.overlay{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.65);
+    backdrop-filter:blur(10px);
+}
+
+.login-container{
+    position:relative;
+    z-index:2;
+
+    width:100vw;
+    height:100vh;
+
+    display:flex;
+    flex-direction:column;
+
+    justify-content:center;
+    align-items:center;
+}
+
+.logo{
+
+    width:140px;
+    margin-bottom:25px;
+
+}
+
+h1{
+
+    color:#ffffff;
+
+    font-size:38px;
+
+    font-weight:700;
+
+    margin-bottom:8px;
+
+    text-align:center;
+
+}
+
+.subtitle{
+
+    color:#d8d8d8;
+
+    font-size:16px;
+
+    margin-bottom:35px;
+
+}
+
+.login-card{
+
+    width:430px;
+
+    max-width:92vw;
+
+    background:rgba(255,255,255,.08);
+
+    border:1px solid rgba(255,255,255,.15);
+
+    border-radius:24px;
+
+    backdrop-filter:blur(22px);
+
+    padding:35px;
+
+    box-shadow:
+    0 25px 60px rgba(0,0,0,.45);
+
+}
+
+.input-group{
+
+    display:flex;
+
+    flex-direction:column;
+
+    margin-bottom:22px;
+
+}
+
+.input-group label{
+
+    color:white;
+
+    font-size:14px;
+
+    margin-bottom:10px;
+
+    font-weight:600;
+
+}
+
+.input-group input{
+
+    height:52px;
+
+    border-radius:14px;
+
+    border:none;
+
+    outline:none;
+
+    padding:0 18px;
+
+    font-size:15px;
+
+    background:white;
+
+}
+
+.input-group input:focus{
+
+    box-shadow:0 0 0 3px rgba(255,255,255,.18);
+
+}
+
+button{
+
+    width:100%;
+
+    height:55px;
+
+    border:none;
+
+    border-radius:15px;
+
+    cursor:pointer;
+
+    background:white;
+
+    color:black;
+
+    font-size:16px;
+
+    font-weight:700;
+
+    transition:.25s;
+
+}
+
+button:hover{
+
+    transform:translateY(-2px);
+
+}
+
+button:active{
+
+    transform:translateY(1px);
+
+}
+
+.loader{
+
+    margin-top:22px;
+
+    color:white;
+
+    text-align:center;
+
+    font-size:14px;
+
+}
+
+.hidden{
+
+    display:none;
+
+}
+
+.message{
+
+    margin-top:22px;
+
+    color:#ffb7b7;
+
+    text-align:center;
+
+    font-size:14px;
+
+    min-height:18px;
+
+}
+
+@media(max-width:650px){
+
+    h1{
+
+        font-size:28px;
+
+    }
+
+    .login-card{
+
+        padding:28px;
+
+    }
+
+}
