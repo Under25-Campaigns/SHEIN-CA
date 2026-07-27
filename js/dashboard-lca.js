@@ -130,72 +130,210 @@ function renderCACards(list){
 }
 
 function buildCreatorHTML(creators){
-    let html="";
+
+    let html = "";
+
     creators.forEach(creator=>{
-        html +=
-        "<div class='creatorLine'>";
-        html +=
-        "<div class='creatorLineTitle'>"
-        + creator.name +
-        "</div>";
-        html +=
-        "<div class='creatorReels'>";
+
+        html += `
+
+        <div class="creatorSection">
+
+            <div class="creatorTitle">
+
+                ${creator.name}
+
+            </div>
+
+        `;
 
         for(let i=1;i<=3;i++){
-            const reel =
-                creator.reels.find(
-                    r=>Number(r.reelNumber)===i
-                );
+
+            const reel = creator.reels.find(
+
+                r => Number(r.reelNumber) === i
+
+            );
 
             if(!reel){
-                html +=
-                "<span class='emptyReel'>Reel "
-                + i +
-                ": —</span>";
+
+                html += `
+
+                <div class="creatorReelRow">
+
+                    <div class="creatorReelLeft">
+
+                        <div class="creatorReelTitle">
+
+                            Reel ${i}
+
+                        </div>
+
+                        <div class="statusEmpty">
+
+                            Not Submitted
+
+                        </div>
+
+                    </div>
+
+                    <div class="creatorReelRight">
+
+                        —
+
+                    </div>
+
+                </div>
+
+                `;
+
                 continue;
+
             }
 
             if(reel.status==="PENDING"){
-                html +=
-                "<div class='pendingReel'>"
-                +
-                "<a href='"
-                + reel.reelLink +
-                "' target='_blank'>"
-                +
-                "Reel "
-                + i +
-                "</a>"
-                +
-                "<button onclick=\"openApprovalModal('"
-                + reel.reelID +
-                "')\">Review</button>"
-                +
-                "</div>";
+
+                html += `
+
+                <div class="creatorReelRow">
+
+                    <div class="creatorReelLeft">
+
+                        <div class="creatorReelTitle">
+
+                            Reel ${i}
+
+                        </div>
+
+                        <div class="statusPending">
+
+                            Pending Approval
+
+                        </div>
+
+                    </div>
+
+                    <div class="creatorReelRight">
+
+                        <a
+                            href="${reel.reelLink || reel.link}"
+                            target="_blank"
+                            class="viewReelButton">
+
+                            View Reel
+
+                        </a>
+
+                        <button
+                            class="reviewButton"
+                            onclick="openApprovalModal('${reel.reelID}')">
+
+                            Review
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+                `;
+
             }
+
+            else if(reel.status==="APPROVED"){
+
+                html += `
+
+                <div class="creatorReelRow">
+
+                    <div class="creatorReelLeft">
+
+                        <div class="creatorReelTitle">
+
+                            Reel ${i}
+
+                        </div>
+
+                        <div class="statusApproved">
+
+                            Approved
+
+                        </div>
+
+                    </div>
+
+                    <div class="creatorReelRight">
+
+                        <a
+                            href="${reel.reelLink || reel.link}"
+                            target="_blank"
+                            class="viewReelButton">
+
+                            View Reel
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+                `;
+
+            }
+
             else{
-                html +=
-                "<span class='"
-                +
-                reel.status.toLowerCase()
-                +
-                "'>"
-                +
-                "Reel "
-                + i +
-                " • "
-                +
-                reel.status
-                +
-                "</span>";
+
+                html += `
+
+                <div class="creatorReelRow">
+
+                    <div class="creatorReelLeft">
+
+                        <div class="creatorReelTitle">
+
+                            Reel ${i}
+
+                        </div>
+
+                        <div class="statusRejected">
+
+                            Rejected
+
+                        </div>
+
+                    </div>
+
+                    <div class="creatorReelRight">
+
+                        <a
+                            href="${reel.reelLink || reel.link}"
+                            target="_blank"
+                            class="viewReelButton">
+
+                            View Reel
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+                `;
+
             }
+
         }
-        html +=
-        "</div>";
-        html +=
-        "</div>";
+
+        html += `
+
+        </div>
+
+        `;
+
     });
+
     return html;
+
 }
 
 function toggleCA(header){
