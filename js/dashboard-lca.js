@@ -374,24 +374,48 @@ function closeApprovalModal(){
 =========================================================== */
 
 async function approveCurrentReel(){
-    const response =
-    await fetch(
-        CONFIG.API_URL +
-        "?action=approveReel"
-        +
-        "&reelID="
-        +
-        encodeURIComponent(CURRENT_REEL_ID)
-        +
-        "&approvedBy="
-        +
-        encodeURIComponent(SESSION.name)
-    );
-    const data =
-        await response.json();
-    if(data.success){
-        closeApprovalModal();
-        loadDashboard();
+    const buttons =
+        document.querySelectorAll("#approvalModal button");
+    buttons.forEach(btn=>btn.disabled=true);
+    const approveButton =
+        buttons[1];
+    approveButton.innerHTML =
+        "Approving...";
+
+    try{
+        const response = await fetch(
+            CONFIG.API_URL +
+            "?action=approveReel" +
+            "&reelID=" +
+            encodeURIComponent(CURRENT_REEL_ID) +
+            "&approvedBy=" +
+            encodeURIComponent(SESSION.name)
+        );
+
+        const data =
+            await response.json();
+
+        if(data.success){
+            approveButton.innerHTML =
+                "Approved ✓";
+            await new Promise(resolve=>setTimeout(resolve,700));
+            closeApprovalModal();
+            await loadDashboard();
+        }
+
+        else{
+            buttons.forEach(btn=>btn.disabled=false);
+            approveButton.innerHTML =
+                "Approve";
+            alert(data.message);
+        }
+    }
+    catch(err){
+        console.error(err);
+        buttons.forEach(btn=>btn.disabled=false);
+        approveButton.innerHTML =
+            "Approve";
+        alert("Unable to approve reel.");
     }
 }
 
@@ -401,25 +425,78 @@ async function approveCurrentReel(){
 =========================================================== */
 
 async function rejectCurrentReel(){
-    const response =
-    await fetch(
-        CONFIG.API_URL +
-        "?action=rejectReel"
-        +
-        "&reelID="
-        +
-        encodeURIComponent(CURRENT_REEL_ID)
-        +
-        "&approvedBy="
-        +
-        encodeURIComponent(SESSION.name)
-    );
-    const data =
-        await response.json();
-    if(data.success){
-        closeApprovalModal();
-        loadDashboard();
+
+    const buttons =
+        document.querySelectorAll("#approvalModal button");
+
+    buttons.forEach(btn=>btn.disabled=true);
+
+    const rejectButton =
+        buttons[2];
+
+    rejectButton.innerHTML =
+        "Rejecting...";
+
+    try{
+
+        const response = await fetch(
+
+            CONFIG.API_URL +
+
+            "?action=rejectReel" +
+
+            "&reelID=" +
+
+            encodeURIComponent(CURRENT_REEL_ID) +
+
+            "&approvedBy=" +
+
+            encodeURIComponent(SESSION.name)
+
+        );
+
+        const data =
+            await response.json();
+
+        if(data.success){
+
+            rejectButton.innerHTML =
+                "Rejected ✓";
+
+            await new Promise(resolve=>setTimeout(resolve,700));
+
+            closeApprovalModal();
+
+            await loadDashboard();
+
+        }
+
+        else{
+
+            buttons.forEach(btn=>btn.disabled=false);
+
+            rejectButton.innerHTML =
+                "Reject";
+
+            alert(data.message);
+
+        }
+
     }
+
+    catch(err){
+
+        console.error(err);
+
+        buttons.forEach(btn=>btn.disabled=false);
+
+        rejectButton.innerHTML =
+            "Reject";
+
+        alert("Unable to reject reel.");
+
+    }
+
 }
 
 
