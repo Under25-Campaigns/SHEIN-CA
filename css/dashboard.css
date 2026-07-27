@@ -741,3 +741,56 @@ font-size:24px;
 }
 
 }
+.pendingReel{
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+margin:12px 0;
+
+padding:14px 18px;
+
+border-radius:14px;
+
+background:rgba(255,255,255,.05);
+
+}
+
+.pendingReel button{
+
+border:none;
+
+padding:10px 18px;
+
+border-radius:12px;
+
+background:white;
+
+color:black;
+
+font-weight:600;
+
+cursor:pointer;
+
+transition:.25s;
+
+}
+
+.pendingReel button:hover{
+
+transform:translateY(-2px);
+
+}
+
+.pendingReel a{
+
+color:white;
+
+text-decoration:none;
+
+font-weight:600;
+
+}
