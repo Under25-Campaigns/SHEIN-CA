@@ -968,3 +968,83 @@ font-weight:600;
     transform:translateY(-2px);
 
 }
+
+.creatorSectionHeader{
+
+    display:flex;
+
+    align-items:center;
+
+    padding-bottom:18px;
+
+    margin-bottom:18px;
+
+    border-bottom:1px solid rgba(255,255,255,.08);
+
+}
+
+.creatorIdentity{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:14px;
+
+    flex-wrap:wrap;
+
+}
+
+.creatorEmoji{
+
+    font-size:30px;
+
+}
+
+.creatorSectionName{
+
+    font-size:28px;
+
+    font-weight:700;
+
+    color:white;
+
+}
+
+.creatorDivider{
+
+    color:rgba(255,255,255,.30);
+
+    font-size:22px;
+
+    font-weight:300;
+
+}
+
+.creatorSectionInstagram{
+
+    color:#BDBDBD;
+
+    text-decoration:none;
+
+    font-size:17px;
+
+    transition:.25s;
+
+}
+
+.creatorSectionInstagram:hover{
+
+    color:white;
+
+}
+
+.creatorFollowers{
+
+    color:#8E8E8E;
+
+    font-size:16px;
+
+    font-weight:500;
+
+}
