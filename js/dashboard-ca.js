@@ -470,81 +470,97 @@ function clearCreatorForm() {
    ADD CREATOR
 =========================================================== */
 
-async function addCreator() {
+async function addCreator() {async function addCreator(){
 
-    const name =
-        document
-        .getElementById("creatorName")
-        .value
-        .trim();
+    const button =
+        document.getElementById("addCreatorButton");
 
-    const phone =
-        document
-        .getElementById("creatorPhone")
-        .value
-        .trim();
+    button.disabled = true;
 
-    const email =
-        document
-        .getElementById("creatorEmail")
-        .value
-        .trim();
-
-    const instagram =
-        document
-        .getElementById("creatorInstagram")
-        .value
-        .replace("@","")
-        .trim();
-
-    const followers =
-        document
-        .getElementById("creatorFollowers")
-        .value
-        .trim();
-
-    if (
-        !name ||
-        !phone ||
-        !email ||
-        !instagram ||
-        !followers
-
-    ){
-        alert("Please complete all fields.");
-        return;
-    }
+    button.innerHTML = "Adding...";
 
     try{
-        const url =
-        CONFIG.API_URL +
-        "?action=addCreator" +
-        "&name=" + encodeURIComponent(name) +
-        "&phone=" + encodeURIComponent(phone) +
-        "&email=" + encodeURIComponent(email) +
-        "&instagram=" + encodeURIComponent(instagram) +
-        "&followers=" + encodeURIComponent(followers) +
-        "&college=" + encodeURIComponent(SESSION.college) +
-        "&assignedLCA=" + encodeURIComponent(SESSION.assignedLCA) +
-        "&assignedCA=" + encodeURIComponent(SESSION.name);
-        const response =
-            await fetch(url);
+
+        const response = await fetch(
+
+            CONFIG.API_URL +
+
+            "?action=addCreator" +
+
+            "&name=" +
+
+            encodeURIComponent(document.getElementById("creatorName").value.trim()) +
+
+            "&phone=" +
+
+            encodeURIComponent(document.getElementById("creatorPhone").value.trim()) +
+
+            "&email=" +
+
+            encodeURIComponent(document.getElementById("creatorEmail").value.trim()) +
+
+            "&instagram=" +
+
+            encodeURIComponent(document.getElementById("creatorInstagram").value.trim()) +
+
+            "&followers=" +
+
+            encodeURIComponent(document.getElementById("creatorFollowers").value.trim()) +
+
+            "&college=" +
+
+            encodeURIComponent(SESSION.college) +
+
+            "&assignedLCA=" +
+
+            encodeURIComponent(SESSION.assignedLCA) +
+
+            "&assignedCA=" +
+
+            encodeURIComponent(SESSION.name)
+
+        );
+
         const data =
             await response.json();
-        if(!data.success){
-            alert(data.message);
-            return;
+
+        if(data.success){
+
+            button.innerHTML = "Added ✓";
+
+            await new Promise(resolve=>setTimeout(resolve,800));
+
+            closeCreatorModal();
+
+            await loadDashboard();
+
         }
-        closeCreatorModal();
-        loadDashboard();
+
+        else{
+
+            button.disabled = false;
+
+            button.innerHTML = "Add Creator";
+
+            alert(data.message);
+
+        }
+
     }
 
     catch(err){
-        console.error(err);
-        alert("Unable to add creator.");
-    }
-}
 
+        console.error(err);
+
+        button.disabled = false;
+
+        button.innerHTML = "Add Creator";
+
+        alert("Unable to add creator.");
+
+    }
+
+}
 
 /* ===========================================================
    REEL SUBMISSION MODAL
