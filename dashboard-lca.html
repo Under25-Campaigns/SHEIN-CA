@@ -1,1 +1,307 @@
 
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>
+        SHEIN Lead Campus Ambassador Dashboard
+    </title>
+
+    <link rel="icon"
+          href="assets/favicon.png">
+
+    <link rel="stylesheet"
+          href="css/dashboard.css">
+
+</head>
+
+<body>
+
+<div class="background"></div>
+
+<div class="overlay"></div>
+
+
+<!-- ===================================================== -->
+<!-- HEADER -->
+<!-- ===================================================== -->
+
+<header>
+
+    <div class="headerLeft">
+
+        <img
+            src="assets/logo.png"
+            class="logo">
+
+        <div>
+
+            <h1>
+
+                SHEIN Lead Campus Ambassador Dashboard
+
+            </h1>
+
+            <p id="welcomeText">
+
+                Welcome
+
+            </p>
+
+        </div>
+
+    </div>
+
+    <div class="headerRight">
+
+        <button
+
+            class="headerButton"
+
+            onclick="loadDashboard()">
+
+            Refresh
+
+        </button>
+
+        <button
+
+            class="headerButton logout"
+
+            onclick="logout()">
+
+            Logout
+
+        </button>
+
+    </div>
+
+</header>
+
+
+<!-- ===================================================== -->
+<!-- STATS -->
+<!-- ===================================================== -->
+
+<section class="statsContainer">
+
+    <div class="statCard">
+
+        <span>
+
+            Campus Ambassadors
+
+        </span>
+
+        <h2 id="totalCA">
+
+            0
+
+        </h2>
+
+    </div>
+
+    <div class="statCard">
+
+        <span>
+
+            Approved Reels
+
+        </span>
+
+        <h2 id="approvedReels">
+
+            0
+
+        </h2>
+
+    </div>
+
+    <div class="statCard">
+
+        <span>
+
+            Pending Reels
+
+        </span>
+
+        <h2 id="pendingReels">
+
+            0
+
+        </h2>
+
+    </div>
+
+    <div class="statCard">
+
+        <span>
+
+            Rejected Reels
+
+        </span>
+
+        <h2 id="rejectedReels">
+
+            0
+
+        </h2>
+
+    </div>
+
+</section>
+
+
+<!-- ===================================================== -->
+<!-- SEARCH -->
+<!-- ===================================================== -->
+
+<section class="toolbar">
+
+    <input
+
+        id="searchCA"
+
+        type="text"
+
+        placeholder="Search Campus Ambassador">
+
+</section>
+
+
+<!-- ===================================================== -->
+<!-- CA CARDS -->
+<!-- ===================================================== -->
+
+<section
+
+    id="caContainer"
+
+    class="creatorContainer">
+
+</section>
+
+
+<!-- ===================================================== -->
+<!-- TEMPLATE -->
+<!-- ===================================================== -->
+
+<template id="caTemplate">
+
+    <div class="creatorCard">
+
+        <div
+
+            class="creatorHeader"
+
+            onclick="toggleCA(this)">
+
+            <div>
+
+                <h3 class="caName">
+
+                </h3>
+
+                <div class="caStats">
+
+                </div>
+
+            </div>
+
+            <span class="expandIcon">
+
+                ▼
+
+            </span>
+
+        </div>
+
+        <div class="creatorBody">
+
+            <div
+
+                class="creatorList">
+
+            </div>
+
+        </div>
+
+    </div>
+
+</template>
+
+
+<!-- ===================================================== -->
+<!-- APPROVE / REJECT MODAL -->
+<!-- ===================================================== -->
+
+<div
+
+    id="approvalModal"
+
+    class="modal hidden">
+
+    <div class="modalCard">
+
+        <h2>
+
+            Reel Review
+
+        </h2>
+
+        <p id="approvalMessage">
+
+        </p>
+
+        <div class="modalButtons">
+
+            <button
+
+                class="secondaryButton"
+
+                onclick="closeApprovalModal()">
+
+                Cancel
+
+            </button>
+
+            <button
+
+                class="primaryButton"
+
+                onclick="approveCurrentReel()">
+
+                Approve
+
+            </button>
+
+            <button
+
+                class="secondaryButton"
+
+                onclick="rejectCurrentReel()">
+
+                Reject
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script src="js/config.js"></script>
+
+<script src="js/dashboard-lca.js"></script>
+
+</body>
+
+</html>
