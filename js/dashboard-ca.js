@@ -582,44 +582,93 @@ function closeReelModal(){
 =========================================================== */
 
 async function submitReel(){
-    const reelLink =
-        document
-        .getElementById("reelLink")
-        .value
-        .trim();
 
-    if(reelLink==""){
-        alert("Please enter the Reel URL.");
+    const button =
+        document.getElementById("submitReelButton");
+
+    const input =
+        document.getElementById("reelLink");
+
+    if(input.value.trim()==""){
+
+        alert("Please enter a Reel Link.");
+
         return;
+
     }
+
+    button.disabled = true;
+
+    button.innerHTML = "Submitting...";
 
     try{
-        const url =
-        CONFIG.API_URL +
-        "?action=submitReel" +
-        "&creatorID=" +
-        encodeURIComponent(CURRENT_CREATOR) +
-        "&reelNumber=" +
-        encodeURIComponent(CURRENT_REEL) +
-        "&reelLink=" +
-        encodeURIComponent(reelLink) +
-        "&submittedBy=" +
-        encodeURIComponent(SESSION.name);
-        const response =
-            await fetch(url);
+
+        const response = await fetch(
+
+            CONFIG.API_URL +
+
+            "?action=submitReel" +
+
+            "&creatorID=" +
+
+            encodeURIComponent(CURRENT_CREATOR) +
+
+            "&reelNumber=" +
+
+            encodeURIComponent(CURRENT_REEL_NUMBER) +
+
+            "&reelLink=" +
+
+            encodeURIComponent(input.value.trim()) +
+
+            "&submittedBy=" +
+
+            encodeURIComponent(SESSION.name)
+
+        );
+
         const data =
             await response.json();
-        if(!data.success){
-            alert(data.message);
-            return;
+
+        if(data.success){
+
+            button.innerHTML =
+                "Submitted ✓";
+
+            await new Promise(resolve=>setTimeout(resolve,800));
+
+            closeReelModal();
+
+            await loadDashboard();
+
         }
-        closeReelModal();
-        loadDashboard();
+
+        else{
+
+            button.disabled = false;
+
+            button.innerHTML =
+                "Submit Reel";
+
+            alert(data.message);
+
+        }
+
     }
+
     catch(err){
+
         console.error(err);
+
+        button.disabled = false;
+
+        button.innerHTML =
+            "Submit Reel";
+
         alert("Unable to submit reel.");
+
     }
+
 }
 
 /* ===========================================================
