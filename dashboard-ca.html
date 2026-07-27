@@ -1,1 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <title>
+        SHEIN Campus Ambassador Dashboard
+    </title>
+
+    <link rel="icon"
+        type="image/png"
+        href="assets/favicon.png">
+
+    <link rel="stylesheet"
+        href="css/dashboard.css">
+
+</head>
+
+<body>
+
+    <div class="background"></div>
+
+    <div class="overlay"></div>
+
+    <div class="page">
+
+        <!-- HEADER -->
+
+        <header class="topbar">
+
+            <div class="brand">
+
+                <img
+                    src="assets/logo.png"
+                    class="logo">
+
+                <div>
+
+                    <h1>
+                        SHEIN Campus Ambassador Dashboard
+                    </h1>
+
+                    <p id="welcomeText">
+                        Welcome
+                    </p>
+
+                </div>
+
+            </div>
+
+            <div class="topActions">
+
+                <button
+                    class="refreshButton"
+                    onclick="loadDashboard()">
+
+                    Refresh
+
+                </button>
+
+                <button
+                    class="logoutButton"
+                    onclick="logout()">
+
+                    Logout
+
+                </button>
+
+            </div>
+
+        </header>
+
+        <!-- STATS -->
+
+        <section class="statsSection">
+
+            <div class="statCard">
+
+                <span class="statTitle">
+
+                    Total Creators
+
+                </span>
+
+                <span
+                    id="totalCreators"
+                    class="statValue">
+
+                    0
+
+                </span>
+
+            </div>
+
+            <div class="statCard">
+
+                <span class="statTitle">
+
+                    Reel 1
+
+                </span>
+
+                <span
+                    id="reel1Count"
+                    class="statValue">
+
+                    0
+
+                </span>
+
+            </div>
+
+            <div class="statCard">
+
+                <span class="statTitle">
+
+                    Reel 2
+
+                </span>
+
+                <span
+                    id="reel2Count"
+                    class="statValue">
+
+                    0
+
+                </span>
+
+            </div>
+
+            <div class="statCard">
+
+                <span class="statTitle">
+
+                    Reel 3
+
+                </span>
+
+                <span
+                    id="reel3Count"
+                    class="statValue">
+
+                    0
+
+                </span>
+
+            </div>
+
+        </section>
+
+        <!-- ADD CREATOR -->
+
+        <section class="addCreatorCard">
+
+            <div class="cardHeading">
+
+                Add New Creator
+
+            </div>
+
+            <div class="creatorGrid">
+
+                <input
+                    id="creatorName"
+                    type="text"
+                    placeholder="Creator Name">
+
+                <input
+                    id="creatorPhone"
+                    type="text"
+                    placeholder="Phone Number">
+
+                <input
+                    id="creatorEmail"
+                    type="email"
+                    placeholder="Email Address">
+
+                <input
+                    id="creatorInstagram"
+                    type="text"
+                    placeholder="Instagram Username">
+
+                <input
+                    id="creatorFollowers"
+                    type="number"
+                    placeholder="Followers">
+
+            </div>
+
+            <div class="creatorButtonArea">
+
+                <button
+                    class="primaryButton"
+                    onclick="addCreator()">
+
+                    Add Creator
+
+                </button>
+
+            </div>
+
+        </section>
+
+        <!-- CREATOR LIST -->
+
+        <section>
+
+            <div class="sectionTitle">
+
+                My Creators
+
+            </div>
+
+            <div
+                id="creatorContainer"
+                class="creatorContainer">
+
+            </div>
+
+        </section>
+
+    </div>
+
+    <!-- TEMPLATE -->
+
+    <template id="creatorTemplate">
+
+        <div class="creatorCard">
+
+            <div
+                class="creatorHeader"
+                onclick="toggleCard(this)">
+
+                <div>
+
+                    <div
+                        class="creatorName">
+
+                    </div>
+
+                    <a
+                        class="creatorInstagram"
+                        target="_blank">
+
+                    </a>
+
+                </div>
+
+                <div class="expandArrow">
+
+                    ▼
+
+                </div>
+
+            </div>
+
+            <div class="creatorBody">
+
+                <!-- REEL 1 -->
+
+                <div class="reelBlock">
+
+                    <div class="reelTitle">
+
+                        Reel 1
+
+                    </div>
+
+                    <div
+                        class="reelArea reel1Area">
+
+                    </div>
+
+                </div>
+
+                <!-- REEL 2 -->
+
+                <div class="reelBlock">
+
+                    <div class="reelTitle">
+
+                        Reel 2
+
+                    </div>
+
+                    <div
+                        class="reelArea reel2Area">
+
+                    </div>
+
+                </div>
+
+                <!-- REEL 3 -->
+
+                <div class="reelBlock">
+
+                    <div class="reelTitle">
+
+                        Reel 3
+
+                    </div>
+
+                    <div
+                        class="reelArea reel3Area">
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </template>
+
+    <script src="js/config.js"></script>
+
+    <script src="js/dashboard-ca.js"></script>
+
+</body>
+
+</html>
