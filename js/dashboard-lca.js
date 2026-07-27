@@ -139,9 +139,23 @@ function buildCreatorHTML(creators){
 
         <div class="creatorSection">
 
-            <div class="creatorTitle">
+            <div class="creatorSectionHeader">
 
-                ${creator.name}
+                <div>
+
+                    <div class="creatorSectionName">
+
+                        👤 ${creator.name}
+
+                    </div>
+
+                    <div class="creatorSectionInstagram">
+
+                        @${creator.instagram}
+
+                    </div>
+
+                </div>
 
             </div>
 
@@ -151,7 +165,7 @@ function buildCreatorHTML(creators){
 
             const reel = creator.reels.find(
 
-                r => Number(r.reelNumber) === i
+                r=>Number(r.reelNumber)===i
 
             );
 
@@ -161,23 +175,19 @@ function buildCreatorHTML(creators){
 
                 <div class="creatorReelRow">
 
-                    <div class="creatorReelLeft">
+                    <div class="creatorReelTitle">
 
-                        <div class="creatorReelTitle">
-
-                            Reel ${i}
-
-                        </div>
-
-                        <div class="statusEmpty">
-
-                            Not Submitted
-
-                        </div>
+                        Reel ${i}
 
                     </div>
 
-                    <div class="creatorReelRight">
+                    <div class="creatorReelStatus statusEmpty">
+
+                        Not Submitted
+
+                    </div>
+
+                    <div class="creatorReelActions">
 
                         —
 
@@ -197,28 +207,24 @@ function buildCreatorHTML(creators){
 
                 <div class="creatorReelRow">
 
-                    <div class="creatorReelLeft">
+                    <div class="creatorReelTitle">
 
-                        <div class="creatorReelTitle">
-
-                            Reel ${i}
-
-                        </div>
-
-                        <div class="statusPending">
-
-                            Pending Approval
-
-                        </div>
+                        Reel ${i}
 
                     </div>
 
-                    <div class="creatorReelRight">
+                    <div class="creatorReelStatus statusPending">
+
+                        Pending Approval
+
+                    </div>
+
+                    <div class="creatorReelActions">
 
                         <a
+                            class="viewReelButton"
                             href="${reel.reelLink || reel.link}"
-                            target="_blank"
-                            class="viewReelButton">
+                            target="_blank">
 
                             View Reel
 
@@ -246,28 +252,24 @@ function buildCreatorHTML(creators){
 
                 <div class="creatorReelRow">
 
-                    <div class="creatorReelLeft">
+                    <div class="creatorReelTitle">
 
-                        <div class="creatorReelTitle">
-
-                            Reel ${i}
-
-                        </div>
-
-                        <div class="statusApproved">
-
-                            Approved
-
-                        </div>
+                        Reel ${i}
 
                     </div>
 
-                    <div class="creatorReelRight">
+                    <div class="creatorReelStatus statusApproved">
+
+                        Approved
+
+                    </div>
+
+                    <div class="creatorReelActions">
 
                         <a
+                            class="viewReelButton"
                             href="${reel.reelLink || reel.link}"
-                            target="_blank"
-                            class="viewReelButton">
+                            target="_blank">
 
                             View Reel
 
@@ -287,28 +289,24 @@ function buildCreatorHTML(creators){
 
                 <div class="creatorReelRow">
 
-                    <div class="creatorReelLeft">
+                    <div class="creatorReelTitle">
 
-                        <div class="creatorReelTitle">
-
-                            Reel ${i}
-
-                        </div>
-
-                        <div class="statusRejected">
-
-                            Rejected
-
-                        </div>
+                        Reel ${i}
 
                     </div>
 
-                    <div class="creatorReelRight">
+                    <div class="creatorReelStatus statusRejected">
+
+                        Rejected
+
+                    </div>
+
+                    <div class="creatorReelActions">
 
                         <a
+                            class="viewReelButton"
                             href="${reel.reelLink || reel.link}"
-                            target="_blank"
-                            class="viewReelButton">
+                            target="_blank">
 
                             View Reel
 
