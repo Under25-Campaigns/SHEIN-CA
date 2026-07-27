@@ -141,19 +141,46 @@ function buildCreatorHTML(creators){
 
             <div class="creatorSectionHeader">
 
-                <div>
+                <div class="creatorIdentity">
 
-                    <div class="creatorSectionName">
+                    <span class="creatorEmoji">
 
-                        👤 ${creator.name}
+                        👤
 
-                    </div>
+                    </span>
 
-                    <div class="creatorSectionInstagram">
+                    <span class="creatorSectionName">
+
+                        ${creator.name}
+
+                    </span>
+
+                    <span class="creatorDivider">
+
+                        |
+
+                    </span>
+
+                    <a
+                        class="creatorSectionInstagram"
+                        href="https://instagram.com/${creator.instagram}"
+                        target="_blank">
 
                         @${creator.instagram}
 
-                    </div>
+                    </a>
+
+                    <span class="creatorDivider">
+
+                        |
+
+                    </span>
+
+                    <span class="creatorFollowers">
+
+                        ${Number(creator.followers || 0).toLocaleString()} Followers
+
+                    </span>
 
                 </div>
 
@@ -165,7 +192,7 @@ function buildCreatorHTML(creators){
 
             const reel = creator.reels.find(
 
-                r=>Number(r.reelNumber)===i
+                r => Number(r.reelNumber) === i
 
             );
 
@@ -222,9 +249,9 @@ function buildCreatorHTML(creators){
                     <div class="creatorReelActions">
 
                         <a
-                            class="viewReelButton"
                             href="${reel.reelLink || reel.link}"
-                            target="_blank">
+                            target="_blank"
+                            class="viewReelButton">
 
                             View Reel
 
@@ -267,9 +294,9 @@ function buildCreatorHTML(creators){
                     <div class="creatorReelActions">
 
                         <a
-                            class="viewReelButton"
                             href="${reel.reelLink || reel.link}"
-                            target="_blank">
+                            target="_blank"
+                            class="viewReelButton">
 
                             View Reel
 
@@ -304,9 +331,9 @@ function buildCreatorHTML(creators){
                     <div class="creatorReelActions">
 
                         <a
-                            class="viewReelButton"
                             href="${reel.reelLink || reel.link}"
-                            target="_blank">
+                            target="_blank"
+                            class="viewReelButton">
 
                             View Reel
 
