@@ -118,10 +118,10 @@ document
    CREATOR CARD RENDERING
 =========================================================== */
 
-function renderCreatorCards(creators){
+function renderCreatorCards(creators){function renderCreatorCards(creators){
 
     const container =
-    document.getElementById("creatorContainer");
+        document.getElementById("creatorContainer");
 
     container.innerHTML = "";
 
@@ -133,24 +133,46 @@ function renderCreatorCards(creators){
 
             <div class="creatorSectionHeader">
 
-                <div>
+                <div class="creatorIdentity">
 
-                    <div class="creatorSectionName">
+                    <span class="creatorEmoji">
 
-                        👤 ${creator.name}
+                        👤
 
-                    </div>
+                    </span>
 
-                    <div class="creatorSectionInstagram">
+                    <span class="creatorSectionName">
 
-                        <a href="https://instagram.com/${creator.instagram}"
-                           target="_blank">
+                        ${creator.name}
 
-                            @${creator.instagram}
+                    </span>
 
-                        </a>
+                    <span class="creatorDivider">
 
-                    </div>
+                        |
+
+                    </span>
+
+                    <a
+                        class="creatorSectionInstagram"
+                        href="https://instagram.com/${creator.instagram}"
+                        target="_blank">
+
+                        @${creator.instagram}
+
+                    </a>
+
+                    <span class="creatorDivider">
+
+                        |
+
+                    </span>
+
+                    <span class="creatorFollowers">
+
+                        ${Number(creator.followers || 0).toLocaleString()} Followers
+
+                    </span>
 
                 </div>
 
