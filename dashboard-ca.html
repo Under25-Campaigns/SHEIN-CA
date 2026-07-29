@@ -244,9 +244,30 @@
             placeholder="Order ID">
 
         <input
-            id="orderScreenshot"
-            type="file"
-            accept=".png,.jpg,.jpeg,image/png,image/jpeg">
+       <div class="file-upload">
+
+    <input
+        id="orderScreenshot"
+        type="file"
+        accept=".png,.jpg,.jpeg,image/png,image/jpeg"
+        hidden
+        onchange="updateFileName(this)">
+
+    <label
+        for="orderScreenshot"
+        class="choose-file-btn">
+
+        📷 Choose Screenshot
+
+    </label>
+
+    <span id="selectedFileName">
+
+        No file selected
+
+    </span>
+
+</div>
 
         <div class="modalButtons">
 
