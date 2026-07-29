@@ -175,111 +175,57 @@ header{
 .statsContainer{
 
     width:calc(100% - 120px);
-
     margin:auto;
-
     display:grid;
-
     grid-template-columns:
-
-    repeat(4,1fr);
-
-    gap:25px;
-
+    repeat(5,1fr);
+    gap:24px;
 }
 
 /* ========================================================== */
 
 .statCard{
-
     background:
-
     rgba(255,255,255,.08);
-
     backdrop-filter:blur(22px);
-
     border:
-
     1px solid rgba(255,255,255,.12);
-
     border-radius:22px;
-
     padding:28px;
-
     transition:.25s;
-
 }
 
 .statCard:hover{
-
     transform:translateY(-4px);
-
 }
 
 .statCard span{
-
     color:#cfcfcf;
-
     font-size:15px;
-
 }
 
 .statCard h2{
-
     margin-top:12px;
-
     font-size:38px;
-
 }
 
 /* ========================================================== */
 
 .toolbar{
-
-    width:calc(100% - 120px);
-
-    margin:45px auto;
-
     display:flex;
-
-    justify-content:space-between;
-
     align-items:center;
-
+    justify-content:space-between;
+    gap:20px;
+    margin:40px 0;
 }
-
-/* ========================================================== */
 
 .toolbar input{
-
-    width:350px;
-
-    height:56px;
-
-    border:none;
-
-    outline:none;
-
-    border-radius:16px;
-
-    padding-left:22px;
-
-    font-size:15px;
-
-    color:white;
-
-    background:
-
-    rgba(255,255,255,.08);
-
-    backdrop-filter:blur(20px);
-
+    width:420px;
 }
 
-.toolbar input::placeholder{
-
-    color:#bcbcbc;
-
+.toolbarButtons{
+    display:flex;
+    gap:16px;
 }
 
 /* ========================================================== */
