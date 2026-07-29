@@ -85,53 +85,30 @@
 <section class="statsContainer">
 
     <div class="statCard">
-
         <span>Total Creators</span>
-
-        <h2 id="totalCreators">
-
-            0
-
-        </h2>
-
+        <h2 id="totalCreators">0</h2>
     </div>
 
     <div class="statCard">
-
         <span>Reel 1</span>
-
-        <h2 id="reel1Count">
-
-            0
-
-        </h2>
-
+        <h2 id="reel1Count">0</h2>
     </div>
 
     <div class="statCard">
-
         <span>Reel 2</span>
-
-        <h2 id="reel2Count">
-
-            0
-
-        </h2>
-
+        <h2 id="reel2Count">0</h2>
     </div>
 
     <div class="statCard">
-
         <span>Reel 3</span>
-
-        <h2 id="reel3Count">
-
-            0
-
-        </h2>
-
+        <h2 id="reel3Count">0</h2>
     </div>
 
+    <div class="statCard">
+        <span>Referrals</span>
+        <h2 id="referralCount">0</h2>
+
+    </div>
 </section>
 
 
@@ -147,16 +124,23 @@
         type="text"
         placeholder="Search Creator">
 
- <button
-    class="primaryButton"
-    onclick="openCreatorModal()">
+    <button
+        class="primaryButton"
+        onclick="openOrderModal()">
 
-    + Add Creator
+        Submit Order
 
-</button>
+    </button>
+
+    <button
+        class="primaryButton"
+        onclick="openCreatorModal()">
+
+        + Add Creator
+
+    </button>
 
 </section>
-
 
 
 <!-- ========================================= -->
@@ -231,9 +215,55 @@
 
 </button>
         </div>
-
     </div>
+</div>
 
+<!-- ========================================= -->
+<!-- ORDER SUBMISSION MODAL -->
+<!-- ========================================= -->
+    
+<div
+    id="orderModal"
+    class="modal hidden">
+
+    <div class="modalCard">
+
+        <h2>
+
+            Submit SHEIN Order
+
+        </h2>
+
+        <input
+            id="orderID"
+            type="text"
+            placeholder="Order ID">
+
+        <input
+            id="orderScreenshot"
+            type="file"
+            accept=".png,.jpg,.jpeg,image/png,image/jpeg">
+
+        <div class="modalButtons">
+
+            <button
+                class="secondaryButton"
+                onclick="closeOrderModal()">
+
+                Cancel
+
+            </button>
+            
+            <button
+                id="submitOrderButton"
+                class="primaryButton"
+                onclick="submitOrder()">
+
+                Submit Order
+
+            </button>
+        </div>
+    </div>
 </div>
 
 
