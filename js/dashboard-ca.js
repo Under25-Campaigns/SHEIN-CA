@@ -962,33 +962,31 @@ async function submitOrder() {
         const base64 =
             await fileToBase64(file);
 
-        const response =
-            await fetch(CONFIG.API_URL, {
+        const response = await fetch(
 
-                method: "POST",
+    CONFIG.API_URL + "?action=submitOrder",
 
-                headers: {
-                    "Content-Type": "application/x-www-form-urlencoded"
-                },
+    {
 
-                body: new URLSearchParams({
+        method: "POST",
 
-                    action: "submitOrder",
+        body: JSON.stringify({
 
-                    orderID: orderID,
+            orderID: orderID,
 
-                    caName: SESSION.name,
+            caName: SESSION.name,
 
-                    college: SESSION.college,
+            college: SESSION.college,
 
-                    referralCode: SESSION.referralCode,
+            referralCode: SESSION.referralCode,
 
-                    screenshot: base64
+            screenshot: base64
 
-                })
+        })
 
-            });
+    }
 
+);
         const data =
             await response.json();
 
