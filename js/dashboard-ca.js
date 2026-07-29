@@ -1054,17 +1054,17 @@ loadDashboard = async function(){
     await loadReferralData();
 };
 
-function updateFileName(input){
+function updateFileName(input) {
 
     const label =
         document.getElementById("selectedFileName");
 
-    if(input.files.length){
+    if (input.files.length) {
 
         label.textContent =
             input.files[0].name;
 
-    }else{
+    } else {
 
         label.textContent =
             "No file selected";
