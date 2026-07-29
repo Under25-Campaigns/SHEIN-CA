@@ -942,62 +942,135 @@ async function submitOrder() {
     button.disabled = true;
     button.innerHTML = "Uploading...";
 
-    const form = new FormData();
+    const reader = new FileReader();
 
-    form.append("action", "submitOrder");
-    form.append("orderID", orderID);
-    form.append("caName", SESSION.name);
-    form.append("college", SESSION.college);
-    form.append("referralCode", SESSION.referralCode);
-    form.append("image", file);
+    reader.onload = function (event) {
 
-    try {
+        const img = new Image();
 
-        const response = await fetch(
-            CONFIG.API_URL,
-            {
-                method: "POST",
-                body: form
+        img.onload = async function () {
+
+            const MAX_WIDTH = 1280;
+            const MAX_HEIGHT = 1280;
+
+            let width = img.width;
+            let height = img.height;
+
+            if (width > height) {
+
+                if (width > MAX_WIDTH) {
+                    height *= MAX_WIDTH / width;
+                    width = MAX_WIDTH;
+                }
+
+            } else {
+
+                if (height > MAX_HEIGHT) {
+                    width *= MAX_HEIGHT / height;
+                    height = MAX_HEIGHT;
+                }
+
             }
-        );
 
-        const data = await response.json();
+            const canvas = document.createElement("canvas");
+            canvas.width = width;
+            canvas.height = height;
 
-        if (data.success) {
+            const ctx = canvas.getContext("2d");
 
-            button.innerHTML = "Submitted ✓";
+            ctx.drawImage(
+                img,
+                0,
+                0,
+                width,
+                height
+            );
 
-            setTimeout(() => {
+            const compressed =
+                canvas.toDataURL(
+                    "image/jpeg",
+                    0.60
+                );
 
-                closeOrderModal();
+            try {
+
+                const response =
+                    await fetch(
+
+                        CONFIG.API_URL +
+
+                        "?action=submitOrder" +
+
+                        "&orderID=" +
+
+                        encodeURIComponent(orderID) +
+
+                        "&caName=" +
+
+                        encodeURIComponent(SESSION.name) +
+
+                        "&college=" +
+
+                        encodeURIComponent(SESSION.college) +
+
+                        "&referralCode=" +
+
+                        encodeURIComponent(SESSION.referralCode) +
+
+                        "&screenshot=" +
+
+                        encodeURIComponent(compressed)
+
+                    );
+
+                const data =
+                    await response.json();
+
+                if (data.success) {
+
+                    button.innerHTML = "Submitted ✓";
+
+                    setTimeout(() => {
+
+                        closeOrderModal();
+
+                        button.disabled = false;
+
+                        button.innerHTML = "Submit Order";
+
+                    }, 800);
+
+                } else {
+
+                    button.disabled = false;
+
+                    button.innerHTML = "Submit Order";
+
+                    alert(data.message);
+
+                }
+
+            } catch (err) {
+
+                console.error(err);
 
                 button.disabled = false;
+
                 button.innerHTML = "Submit Order";
 
-            },800);
+                alert("Upload Failed.");
 
-        } else {
+            }
 
-            button.disabled = false;
-            button.innerHTML = "Submit Order";
+        };
 
-            alert(data.message);
+        img.src = event.target.result;
 
-        }
+    };
 
-    } catch(err){
-
-        console.error(err);
-
-        button.disabled = false;
-        button.innerHTML = "Submit Order";
-
-        alert("Upload failed.");
-
-    }
+    reader.readAsDataURL(file);
 
 }
-
 
 /* ===========================================================
    MODAL ESCAPE
