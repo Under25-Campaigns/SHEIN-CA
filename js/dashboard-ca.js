@@ -918,86 +918,53 @@ function closeOrderModal(){
 
 }
 
+function fileToBase64(file){
+
+    return new Promise((resolve,reject)=>{
+
+        const reader = new FileReader();
+
+        reader.onload = ()=>resolve(reader.result);
+
+        reader.onerror = reject;
+
+        reader.readAsDataURL(file);
+
+    });
+
+}
 
 /* ===========================================================
    SUBMIT ORDER
 =========================================================== */
 
-async function submitOrder() {
+const base64 = await fileToBase64(file);
 
-    const orderID =
-        document.getElementById("orderID").value.trim();
+const response = await fetch(CONFIG.API_URL, {
 
-    const file =
-        document.getElementById("orderScreenshot").files[0];
+    method: "POST",
 
-    if (!orderID || !file) {
+    headers: {
+        "Content-Type":"application/x-www-form-urlencoded"
+    },
 
-        alert("Please complete all fields.");
-        return;
+    body: new URLSearchParams({
 
-    }
+        action: "submitOrder",
 
-    const button =
-        document.getElementById("submitOrderButton");
+        orderID: orderID,
 
-    button.disabled = true;
-    button.innerHTML = "Uploading...";
+        caName: SESSION.name,
 
-    const form = new FormData();
+        college: SESSION.college,
 
-    form.append("action","submitOrder");
-    form.append("orderID",orderID);
-    form.append("caName",SESSION.name);
-    form.append("college",SESSION.college);
-    form.append("referralCode",SESSION.referralCode);
-    form.append("image",file);
+        referralCode: SESSION.referralCode,
 
-    try{
+        screenshot: base64
 
-        const response =
-            await fetch(CONFIG.API_URL,{
-                method:"POST",
-                body:form
-            });
+    })
 
-        const data =
-            await response.json();
-
-        if(data.success){
-
-            button.innerHTML = "Submitted ✓";
-
-            setTimeout(()=>{
-
-                closeOrderModal();
-
-                button.disabled = false;
-                button.innerHTML = "Submit Order";
-
-            },800);
-
-        }else{
-
-            button.disabled = false;
-            button.innerHTML = "Submit Order";
-
-            alert(data.message);
-
-        }
-
-    }catch(err){
-
-        console.error(err);
-
-        button.disabled = false;
-        button.innerHTML = "Submit Order";
-
-        alert("Upload Failed.");
-
-    }
-
-}
+});
 
 /* ===========================================================
    MODAL ESCAPE
