@@ -1032,3 +1032,44 @@ font-weight:600;
     font-weight:500;
 
 }
+
+.file-upload{
+    display:flex;
+    align-items:center;
+    gap:16px;
+    margin-top:18px;
+}
+
+.choose-file-btn{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    padding:14px 28px;
+    border-radius:14px;
+    background:#fff;
+    color:#111;
+    font-weight:700;
+    cursor:pointer;
+    transition:.25s;
+    user-select:none;
+    font-size:15px;
+}
+
+.choose-file-btn:hover{
+    transform:translateY(-2px);
+    background:#f2f2f2;
+    box-shadow:0 10px 25px rgba(255,255,255,.15);
+}
+
+.choose-file-btn:active{
+    transform:scale(.98);
+}
+
+#selectedFileName{
+    color:#bdbdbd;
+    font-size:15px;
+    overflow:hidden;
+    white-space:nowrap;
+    text-overflow:ellipsis;
+    max-width:260px;
+}
