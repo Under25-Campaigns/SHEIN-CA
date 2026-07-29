@@ -840,3 +840,197 @@ renderDashboard = function () {
         r3
     );
 };
+
+/* ===========================================================
+   REFERRAL CARD
+=========================================================== */
+
+async function loadReferralData() {
+
+    try {
+
+        const response = await fetch(
+
+            CONFIG.API_URL +
+
+            "?action=getReferralData" +
+
+            "&username=" +
+
+            encodeURIComponent(SESSION.username)
+
+        );
+
+        const data = await response.json();
+
+        if(data.success){
+
+            document.getElementById("referralCount").innerHTML =
+                data.referralCount;
+
+            SESSION.referralCode =
+                data.referralCode;
+
+            SESSION.referralCount =
+                data.referralCount;
+
+            localStorage.setItem(
+                "SHEIN_SESSION",
+                JSON.stringify(SESSION)
+            );
+
+        }
+
+    }
+
+    catch(err){
+
+        console.error(err);
+
+    }
+
+}
+
+
+/* ===========================================================
+   ORDER MODAL
+=========================================================== */
+
+function openOrderModal(){
+
+    document.getElementById("orderID").value = "";
+
+    document.getElementById("orderScreenshot").value = "";
+
+    document
+        .getElementById("orderModal")
+        .classList
+        .remove("hidden");
+
+}
+
+function closeOrderModal(){
+
+    document
+        .getElementById("orderModal")
+        .classList
+        .add("hidden");
+
+}
+
+
+/* ===========================================================
+   SUBMIT ORDER
+=========================================================== */
+
+async function submitOrder(){
+
+    const button =
+        document.getElementById("submitOrderButton");
+
+    const file =
+        document.getElementById("orderScreenshot").files[0];
+
+    const orderID =
+        document.getElementById("orderID").value.trim();
+
+    if(orderID==""){
+
+        alert("Please enter an Order ID.");
+
+        return;
+
+    }
+
+    if(!file){
+
+        alert("Please select a screenshot.");
+
+        return;
+
+    }
+
+    button.disabled = true;
+
+    button.innerHTML = "Submitting...";
+
+    const reader = new FileReader();
+
+    reader.onload = async function(){
+
+        try{
+
+            const response = await fetch(
+
+                CONFIG.API_URL +
+
+                "?action=submitOrder" +
+
+                "&orderID=" +
+
+                encodeURIComponent(orderID) +
+
+                "&caName=" +
+                encodeURIComponent(SESSION.name) +
+                "&college=" +
+                encodeURIComponent(SESSION.college) +
+                "&referralCode=" +
+                encodeURIComponent(SESSION.referralCode) +
+                "&screenshot=" +
+                encodeURIComponent(reader.result)
+            );
+
+            const data =
+                await response.json();
+            if(data.success){
+                button.innerHTML = "Submitted ✓";
+                await new Promise(resolve=>setTimeout(resolve,800));
+                closeOrderModal();
+            }
+
+            else{
+                alert(data.message);
+                button.disabled = false;
+                button.innerHTML = "Submit Order";
+            }
+        }
+
+        catch(err){
+            console.error(err);
+            button.disabled = false;
+            button.innerHTML = "Submit Order";
+            alert("Unable to submit order.");
+        }
+    };
+    reader.readAsDataURL(file);
+}
+
+
+/* ===========================================================
+   MODAL ESCAPE
+=========================================================== */
+const originalKeyListener = document.onkeydown;
+document.addEventListener("keydown",function(e){
+    if(e.key==="Escape"){
+        closeOrderModal();
+    }
+});
+
+window.addEventListener("click",function(e){
+    const modal =
+        document.getElementById("orderModal");
+    if(e.target===modal){
+        closeOrderModal();
+    }
+});
+
+
+/* ===========================================================
+   LOAD REFERRALS ON DASHBOARD
+=========================================================== */
+
+const originalLoadDashboard = loadDashboard;
+loadDashboard = async function(){
+    await originalLoadDashboard();
+    await loadReferralData();
+};
