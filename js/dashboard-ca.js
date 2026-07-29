@@ -923,86 +923,79 @@ function closeOrderModal(){
    SUBMIT ORDER
 =========================================================== */
 
-async function submitOrder(){
-
-    const button =
-        document.getElementById("submitOrderButton");
-
-    const file =
-        document.getElementById("orderScreenshot").files[0];
+async function submitOrder() {
 
     const orderID =
         document.getElementById("orderID").value.trim();
 
-    if(orderID==""){
+    const file =
+        document.getElementById("orderScreenshot").files[0];
 
-        alert("Please enter an Order ID.");
-
+    if (!orderID || !file) {
+        alert("Please complete all fields.");
         return;
-
     }
 
-    if(!file){
-
-        alert("Please select a screenshot.");
-
-        return;
-
-    }
+    const button =
+        document.getElementById("submitOrderButton");
 
     button.disabled = true;
+    button.innerHTML = "Uploading...";
 
-    button.innerHTML = "Submitting...";
+    const form = new FormData();
 
-    const reader = new FileReader();
+    form.append("action", "submitOrder");
+    form.append("orderID", orderID);
+    form.append("caName", SESSION.name);
+    form.append("college", SESSION.college);
+    form.append("referralCode", SESSION.referralCode);
+    form.append("image", file);
 
-    reader.onload = async function(){
+    try {
 
-        try{
-
-            const response = await fetch(
-
-                CONFIG.API_URL +
-
-                "?action=submitOrder" +
-
-                "&orderID=" +
-
-                encodeURIComponent(orderID) +
-
-                "&caName=" +
-                encodeURIComponent(SESSION.name) +
-                "&college=" +
-                encodeURIComponent(SESSION.college) +
-                "&referralCode=" +
-                encodeURIComponent(SESSION.referralCode) +
-                "&screenshot=" +
-                encodeURIComponent(reader.result)
-            );
-
-            const data =
-                await response.json();
-            if(data.success){
-                button.innerHTML = "Submitted ✓";
-                await new Promise(resolve=>setTimeout(resolve,800));
-                closeOrderModal();
+        const response = await fetch(
+            CONFIG.API_URL,
+            {
+                method: "POST",
+                body: form
             }
+        );
 
-            else{
-                alert(data.message);
+        const data = await response.json();
+
+        if (data.success) {
+
+            button.innerHTML = "Submitted ✓";
+
+            setTimeout(() => {
+
+                closeOrderModal();
+
                 button.disabled = false;
                 button.innerHTML = "Submit Order";
-            }
-        }
 
-        catch(err){
-            console.error(err);
+            },800);
+
+        } else {
+
             button.disabled = false;
             button.innerHTML = "Submit Order";
-            alert("Unable to submit order.");
+
+            alert(data.message);
+
         }
-    };
-    reader.readAsDataURL(file);
+
+    } catch(err){
+
+        console.error(err);
+
+        button.disabled = false;
+        button.innerHTML = "Submit Order";
+
+        alert("Upload failed.");
+
+    }
+
 }
 
 
