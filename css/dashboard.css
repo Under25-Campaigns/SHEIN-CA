@@ -212,20 +212,59 @@ header{
 /* ========================================================== */
 
 .toolbar{
+
+    width:calc(100% - 120px);
+
+    margin:40px auto;
+
     display:flex;
-    align-items:center;
+
     justify-content:space-between;
+
+    align-items:center;
+
     gap:20px;
-    margin:40px 0;
+
 }
 
-.toolbar input{
+.toolbar input,
+#searchCreators{
+
     width:420px;
+    height:58px;
+
+    border:none;
+    outline:none;
+
+    border-radius:18px;
+
+    padding:0 22px;
+
+    font-size:18px;
+
+    color:white;
+
+    background:rgba(255,255,255,.08);
+
+    backdrop-filter:blur(20px);
+
+}
+
+.toolbar input::placeholder,
+#searchCreators::placeholder{
+
+    color:#bdbdbd;
+
 }
 
 .toolbarButtons{
+
     display:flex;
+
     gap:16px;
+
+    margin-left:auto;
+
 }
 
 /* ========================================================== */
