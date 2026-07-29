@@ -932,8 +932,10 @@ async function submitOrder() {
         document.getElementById("orderScreenshot").files[0];
 
     if (!orderID || !file) {
+
         alert("Please complete all fields.");
         return;
+
     }
 
     const button =
@@ -942,133 +944,58 @@ async function submitOrder() {
     button.disabled = true;
     button.innerHTML = "Uploading...";
 
-    const reader = new FileReader();
+    const form = new FormData();
 
-    reader.onload = function (event) {
+    form.append("action","submitOrder");
+    form.append("orderID",orderID);
+    form.append("caName",SESSION.name);
+    form.append("college",SESSION.college);
+    form.append("referralCode",SESSION.referralCode);
+    form.append("image",file);
 
-        const img = new Image();
+    try{
 
-        img.onload = async function () {
+        const response =
+            await fetch(CONFIG.API_URL,{
+                method:"POST",
+                body:form
+            });
 
-            const MAX_WIDTH = 1280;
-            const MAX_HEIGHT = 1280;
+        const data =
+            await response.json();
 
-            let width = img.width;
-            let height = img.height;
+        if(data.success){
 
-            if (width > height) {
+            button.innerHTML = "Submitted ✓";
 
-                if (width > MAX_WIDTH) {
-                    height *= MAX_WIDTH / width;
-                    width = MAX_WIDTH;
-                }
+            setTimeout(()=>{
 
-            } else {
-
-                if (height > MAX_HEIGHT) {
-                    width *= MAX_HEIGHT / height;
-                    height = MAX_HEIGHT;
-                }
-
-            }
-
-            const canvas = document.createElement("canvas");
-            canvas.width = width;
-            canvas.height = height;
-
-            const ctx = canvas.getContext("2d");
-
-            ctx.drawImage(
-                img,
-                0,
-                0,
-                width,
-                height
-            );
-
-            const compressed =
-                canvas.toDataURL(
-                    "image/jpeg",
-                    0.60
-                );
-
-            try {
-
-                const response =
-                    await fetch(
-
-                        CONFIG.API_URL +
-
-                        "?action=submitOrder" +
-
-                        "&orderID=" +
-
-                        encodeURIComponent(orderID) +
-
-                        "&caName=" +
-
-                        encodeURIComponent(SESSION.name) +
-
-                        "&college=" +
-
-                        encodeURIComponent(SESSION.college) +
-
-                        "&referralCode=" +
-
-                        encodeURIComponent(SESSION.referralCode) +
-
-                        "&screenshot=" +
-
-                        encodeURIComponent(compressed)
-
-                    );
-
-                const data =
-                    await response.json();
-
-                if (data.success) {
-
-                    button.innerHTML = "Submitted ✓";
-
-                    setTimeout(() => {
-
-                        closeOrderModal();
-
-                        button.disabled = false;
-
-                        button.innerHTML = "Submit Order";
-
-                    }, 800);
-
-                } else {
-
-                    button.disabled = false;
-
-                    button.innerHTML = "Submit Order";
-
-                    alert(data.message);
-
-                }
-
-            } catch (err) {
-
-                console.error(err);
+                closeOrderModal();
 
                 button.disabled = false;
-
                 button.innerHTML = "Submit Order";
 
-                alert("Upload Failed.");
+            },800);
 
-            }
+        }else{
 
-        };
+            button.disabled = false;
+            button.innerHTML = "Submit Order";
 
-        img.src = event.target.result;
+            alert(data.message);
 
-    };
+        }
 
-    reader.readAsDataURL(file);
+    }catch(err){
+
+        console.error(err);
+
+        button.disabled = false;
+        button.innerHTML = "Submit Order";
+
+        alert("Upload Failed.");
+
+    }
 
 }
 
