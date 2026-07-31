@@ -125,25 +125,42 @@ document
 );
 
 function renderCACards(list){
+
     const container =
         document.getElementById("caContainer");
+
     container.innerHTML = "";
+
     const template =
         document.getElementById("caTemplate");
+
     list.forEach(ca=>{
+
         const node =
             template.content.cloneNode(true);
+
         node.querySelector(".caName").innerHTML =
             ca.caName;
+
         node.querySelector(".caStats").innerHTML =
-            ca.totalApprovedReels +
-            " Approved Reels";
+            `
+            ${ca.creators.length} Creators
+            &nbsp;&nbsp;•&nbsp;&nbsp;
+            ${ca.totalApprovedReels} Reels
+            &nbsp;&nbsp;•&nbsp;&nbsp;
+            ${Number(ca.totalReferrals || 0).toLocaleString()} Referrals
+            `;
+
         const creatorList =
             node.querySelector(".creatorList");
+
         creatorList.innerHTML =
             buildCreatorHTML(ca.creators);
+
         container.appendChild(node);
+
     });
+
 }
 
 function buildCreatorHTML(creators){
