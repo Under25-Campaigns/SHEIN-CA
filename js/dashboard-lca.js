@@ -34,27 +34,44 @@ function logout() {
 
 
 async function loadDashboard() {
+
     try {
+
         const response = await fetch(
+
             CONFIG.API_URL +
             "?action=getLCAOverview" +
             "&lcaName=" +
             encodeURIComponent(SESSION.name)
+
         );
+
         const data = await response.json();
+
         if (!data.success) {
+
             alert(data.message);
             return;
+
         }
+
         CAMPUS_AMBASSADORS =
             data.campusAmbassadors;
-       renderDashboard();
+
+        document.getElementById("referralCount").innerText =
+            data.referralCount || 0;
+
+        renderDashboard();
 
     }
+
     catch (err) {
+
         console.error(err);
         alert("Unable to connect.");
+
     }
+
 }
 
 
