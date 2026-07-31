@@ -40,7 +40,6 @@ async function login() {
     if (!username || !password) {
 
         showMessage("Please enter Username and Password.");
-
         return;
 
     }
@@ -48,7 +47,6 @@ async function login() {
     if (!CONFIG.API_URL) {
 
         showMessage("Apps Script API URL has not been configured.");
-
         return;
 
     }
@@ -72,7 +70,6 @@ async function login() {
         if (!data.success) {
 
             showMessage(data.message);
-
             return;
 
         }
@@ -80,15 +77,10 @@ async function login() {
         const session = {
 
             username: data.username,
-
             role: data.role,
-
             name: data.name,
-
             college: data.college,
-
             assignedLCA: data.assignedLCA,
-
             loginTime: Date.now()
 
         };
@@ -98,23 +90,25 @@ async function login() {
             JSON.stringify(session)
         );
 
-        if (data.role === "CA") {
+        switch (data.role) {
 
-            window.location.href = "dashboard-ca.html";
+            case "ADMIN":
+                window.location.href = "dashboard-admin.html";
+                return;
 
-            return;
+            case "LCA":
+                window.location.href = "dashboard-lca.html";
+                return;
+
+            case "CA":
+                window.location.href = "dashboard-ca.html";
+                return;
+
+            default:
+                showMessage("Unknown user role.");
+                return;
 
         }
-
-        if (data.role === "LCA") {
-
-            window.location.href = "dashboard-lca.html";
-
-            return;
-
-        }
-
-        showMessage("Unknown user role.");
 
     }
 
@@ -143,24 +137,27 @@ async function login() {
         if (!session.role) {
 
             localStorage.removeItem("SHEIN_SESSION");
-
             return;
 
         }
 
-        if (session.role === "CA") {
+        switch (session.role) {
 
-            window.location.href = "dashboard-ca.html";
+            case "ADMIN":
+                window.location.href = "dashboard-admin.html";
+                return;
 
-            return;
+            case "LCA":
+                window.location.href = "dashboard-lca.html";
+                return;
 
-        }
+            case "CA":
+                window.location.href = "dashboard-ca.html";
+                return;
 
-        if (session.role === "LCA") {
-
-            window.location.href = "dashboard-lca.html";
-
-            return;
+            default:
+                localStorage.removeItem("SHEIN_SESSION");
+                return;
 
         }
 
