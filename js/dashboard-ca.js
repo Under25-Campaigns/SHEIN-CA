@@ -29,6 +29,7 @@ function validateSession() {
     }
     document.getElementById("welcomeText").innerHTML =
         "Welcome, " + SESSION.name;
+    startSessionTimer();
     loadDashboard();
 }
 
@@ -37,6 +38,36 @@ function logout() {
     location.href = "index.html";
 }
 
+/* ===========================================================
+   AUTO LOGOUT (15 MINUTES INACTIVE)
+=========================================================== */
+const SESSION_TIMEOUT = 15 * 60 * 1000;
+let inactivityTimer;
+function startSessionTimer() {
+
+    resetSessionTimer();
+    [
+        "mousemove",
+        "mousedown",
+        "click",
+        "scroll",
+        "keypress",
+        "touchstart"
+    ].forEach(event => {
+        document.addEventListener(
+            event,
+           resetSessionTimer
+        );
+    });
+}
+
+function resetSessionTimer() {
+    clearTimeout(inactivityTimer);
+    inactivityTimer = setTimeout(() => {
+        alert("Your session has expired.");
+        logout();
+    }, SESSION_TIMEOUT);
+}
 
 /* ===========================================================
    LOAD DASHBOARD
