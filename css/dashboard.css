@@ -1082,3 +1082,19 @@ font-weight:600;
     max-width:300px;
 
 }
+
+.caStats{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    margin-top:8px;
+
+    font-size:18px;
+    font-weight:600;
+
+    color:rgba(255,255,255,.75);
+}
+
+.caStats span{
+    white-space:nowrap;
+}
