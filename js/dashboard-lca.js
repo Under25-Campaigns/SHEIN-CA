@@ -14,15 +14,15 @@ function validateSession() {
         location.href = "index.html";
         return;
     }
-
     SESSION = JSON.parse(raw);
+
     if (SESSION.role !== "LCA") {
         location.href = "index.html";
         return;
     }
-
     document.getElementById("welcomeText").innerHTML =
         "Welcome, " + SESSION.name;
+    startSessionTimer();
     loadDashboard();
 }
 
@@ -32,6 +32,35 @@ function logout() {
     location.href = "index.html";
 }
 
+/* ===========================================================
+   AUTO LOGOUT (15 MINUTES INACTIVE)
+=========================================================== */
+const SESSION_TIMEOUT = 15 * 60 * 1000;
+let inactivityTimer;
+function startSessionTimer() {
+    resetSessionTimer();
+    [
+        "mousemove",
+        "mousedown",
+        "click",
+        "scroll",
+        "keypress",
+        "touchstart"
+    ].forEach(event => {
+        document.addEventListener(
+            event,
+            resetSessionTimer
+        );
+    });
+}
+
+function resetSessionTimer() {
+    clearTimeout(inactivityTimer);
+    inactivityTimer = setTimeout(() => {
+        alert("Your session has expired.");
+        logout();
+    }, SESSION_TIMEOUT);
+}
 
 async function loadDashboard() {
 
@@ -507,57 +536,37 @@ async function rejectCurrentReel(){
             "?action=rejectReel" +
 
             "&reelID=" +
-
             encodeURIComponent(CURRENT_REEL_ID) +
-
             "&approvedBy=" +
-
             encodeURIComponent(SESSION.name)
-
         );
 
         const data =
             await response.json();
-
         if(data.success){
-
             rejectButton.innerHTML =
                 "Rejected ✓";
 
             await new Promise(resolve=>setTimeout(resolve,700));
-
             closeApprovalModal();
-
             await loadDashboard();
-
         }
 
         else{
-
             buttons.forEach(btn=>btn.disabled=false);
-
             rejectButton.innerHTML =
                 "Reject";
-
             alert(data.message);
-
         }
-
     }
 
     catch(err){
-
         console.error(err);
-
         buttons.forEach(btn=>btn.disabled=false);
-
         rejectButton.innerHTML =
             "Reject";
-
         alert("Unable to reject reel.");
-
     }
-
 }
 
 
