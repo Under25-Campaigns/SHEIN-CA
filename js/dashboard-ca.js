@@ -917,6 +917,21 @@ function openOrderModal(){
 
     document.getElementById("orderScreenshot").value = "";
 
+    const dropdown =
+        document.getElementById("orderCreator");
+
+    dropdown.innerHTML =
+        "<option value=''>Select Creator</option>";
+
+    CREATORS.forEach(creator=>{
+
+        dropdown.innerHTML +=
+            `<option value="${creator.creatorID}">
+                ${creator.name}
+            </option>`;
+
+    });
+
     document
         .getElementById("orderModal")
         .classList
@@ -955,21 +970,28 @@ function fileToBase64(file){
 
 async function submitOrder() {
 
+    const creatorID =
+        document.getElementById("orderCreator").value;
+
     const orderID =
         document.getElementById("orderID").value.trim();
 
     const file =
         document.getElementById("orderScreenshot").files[0];
 
-    if (!orderID || !file) {
+    if (!creatorID || !orderID || !file) {
+
         alert("Please complete all fields.");
+
         return;
+
     }
 
     const button =
         document.getElementById("submitOrderButton");
 
     button.disabled = true;
+
     button.innerHTML = "Uploading...";
 
     try {
@@ -979,59 +1001,69 @@ async function submitOrder() {
 
         const response = await fetch(
 
-    CONFIG.API_URL + "?action=submitOrder",
+            CONFIG.API_URL + "?action=submitOrder",
 
-    {
+            {
 
-        method: "POST",
+                method:"POST",
 
-        body: JSON.stringify({
+                body:JSON.stringify({
 
-            orderID: orderID,
+                    creatorID: creatorID,
 
-            caName: SESSION.name,
+                    orderID: orderID,
 
-            college: SESSION.college,
+                    caName: SESSION.name,
 
-            referralCode: SESSION.referralCode,
+                    college: SESSION.college,
 
-            screenshot: base64
+                    referralCode: SESSION.referralCode,
 
-        })
+                    screenshot: base64
 
-    }
+                })
 
-);
+            }
+
+        );
+
         const data =
             await response.json();
 
-        if (data.success) {
+        if(data.success){
 
             button.innerHTML = "Submitted ✓";
 
-            setTimeout(() => {
+            setTimeout(()=>{
 
                 closeOrderModal();
 
                 button.disabled = false;
+
                 button.innerHTML = "Submit Order";
 
-            }, 800);
+            },800);
 
-        } else {
+        }
+
+        else{
 
             button.disabled = false;
+
             button.innerHTML = "Submit Order";
 
             alert(data.message);
 
         }
 
-    } catch (err) {
+    }
+
+    catch(err){
 
         console.error(err);
 
         button.disabled = false;
+
         button.innerHTML = "Submit Order";
 
         alert("Upload failed.");
