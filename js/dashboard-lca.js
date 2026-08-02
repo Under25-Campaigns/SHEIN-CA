@@ -459,6 +459,154 @@ function closeApprovalModal(){
 }
 
 
+function openCreatorModal(){
+
+    document.getElementById("creatorName").value="";
+    document.getElementById("creatorPhone").value="";
+    document.getElementById("creatorEmail").value="";
+    document.getElementById("creatorInstagram").value="";
+    document.getElementById("creatorFollowers").value="";
+
+    const dropdown =
+        document.getElementById("creatorAssignedCA");
+
+    dropdown.innerHTML =
+        "<option value=''>Select Campus Ambassador</option>";
+
+    CAMPUS_AMBASSADORS.forEach(ca=>{
+
+        dropdown.innerHTML +=
+        `<option value="${ca.caName}">
+            ${ca.caName}
+        </option>`;
+
+    });
+
+    document
+        .getElementById("creatorModal")
+        .classList
+        .remove("hidden");
+
+}
+
+function closeCreatorModal(){
+
+    document
+        .getElementById("creatorModal")
+        .classList
+        .add("hidden");
+
+}
+
+async function addCreator(){
+
+    const assignedCA =
+        document.getElementById("creatorAssignedCA").value;
+
+    const name =
+        document.getElementById("creatorName").value.trim();
+
+    const phone =
+        document.getElementById("creatorPhone").value.trim();
+
+    const email =
+        document.getElementById("creatorEmail").value.trim();
+
+    const instagram =
+        document.getElementById("creatorInstagram").value.trim();
+
+    const followers =
+        document.getElementById("creatorFollowers").value.trim();
+
+    if(
+        !assignedCA||
+        !name||
+        !phone||
+        !email||
+        !instagram||
+        !followers
+    ){
+
+        alert("Please complete all fields.");
+        return;
+
+    }
+
+    const button =
+        document.getElementById("addCreatorButton");
+
+    button.disabled=true;
+    button.innerHTML="Adding...";
+
+    try{
+
+        const response=await fetch(
+
+            CONFIG.API_URL+
+
+            "?action=addCreator"+
+
+            "&name="+encodeURIComponent(name)+
+
+            "&phone="+encodeURIComponent(phone)+
+
+            "&email="+encodeURIComponent(email)+
+
+            "&instagram="+encodeURIComponent(instagram)+
+
+            "&followers="+encodeURIComponent(followers)+
+
+            "&college="+encodeURIComponent(SESSION.college)+
+
+            "&assignedLCA="+encodeURIComponent(SESSION.name)+
+
+            "&assignedCA="+encodeURIComponent(assignedCA)
+
+        );
+
+        const data=await response.json();
+
+        if(data.success){
+
+            button.innerHTML="Added ✓";
+
+            setTimeout(()=>{
+
+                closeCreatorModal();
+
+                button.disabled=false;
+                button.innerHTML="Add Creator";
+
+                loadDashboard();
+
+            },700);
+
+        }
+
+        else{
+
+            button.disabled=false;
+            button.innerHTML="Add Creator";
+
+            alert(data.message);
+
+        }
+
+    }
+
+    catch(err){
+
+        console.error(err);
+
+        button.disabled=false;
+        button.innerHTML="Add Creator";
+
+        alert("Unable to add creator.");
+
+    }
+
+}
+
 /* ===========================================================
    APPROVE
 =========================================================== */
