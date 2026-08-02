@@ -175,7 +175,7 @@
 
 
 <!-- ===================================================== -->
-<!-- SEARCH -->
+<!-- SEARCH + ACTIONS -->
 <!-- ===================================================== -->
 
 <section class="toolbar">
@@ -187,6 +187,20 @@
         type="text"
 
         placeholder="Search Campus Ambassador">
+
+    <div class="toolbarButtons">
+
+        <button
+
+            class="primaryButton"
+
+            onclick="openCreatorModal()">
+
+            + Add Creator
+
+        </button>
+
+    </div>
 
 </section>
 
@@ -203,6 +217,73 @@
 
 </section>
 
+<!-- ===================================================== -->
+<!-- CREATOR MODAL -->
+<!-- ===================================================== -->    
+
+    <div id="creatorModal" class="modal hidden">
+
+    <div class="modalCard">
+
+        <h2>Add Creator</h2>
+
+        <select id="creatorAssignedCA">
+
+            <option value="">
+                Select Campus Ambassador
+            </option>
+
+        </select>
+
+        <input
+            id="creatorName"
+            type="text"
+            placeholder="Creator Name">
+
+        <input
+            id="creatorPhone"
+            type="text"
+            placeholder="Phone Number">
+
+        <input
+            id="creatorEmail"
+            type="email"
+            placeholder="Email Address">
+
+        <input
+            id="creatorInstagram"
+            type="text"
+            placeholder="Instagram Username">
+
+        <input
+            id="creatorFollowers"
+            type="number"
+            placeholder="Followers">
+
+        <div class="modalButtons">
+
+            <button
+                class="secondaryButton"
+                onclick="closeCreatorModal()">
+
+                Cancel
+
+            </button>
+
+            <button
+                id="addCreatorButton"
+                class="primaryButton"
+                onclick="addCreator()">
+
+                Add Creator
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
 
 <!-- ===================================================== -->
 <!-- TEMPLATE -->
