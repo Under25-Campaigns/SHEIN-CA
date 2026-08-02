@@ -1098,3 +1098,41 @@ font-weight:600;
 .caStats span{
     white-space:nowrap;
 }
+
+#orderCreator{
+
+    width:100%;
+
+    height:58px;
+
+    border:none;
+
+    outline:none;
+
+    border-radius:18px;
+
+    padding:0 20px;
+
+    background:#343434;
+
+    color:white;
+
+    font-size:18px;
+
+    margin-bottom:18px;
+
+    appearance:none;
+
+    -webkit-appearance:none;
+
+    cursor:pointer;
+
+}
+
+#orderCreator option{
+
+    background:#343434;
+
+    color:white;
+
+}
