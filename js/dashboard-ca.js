@@ -214,19 +214,15 @@ function renderCreatorCards(creators){
         html += buildCARow(
             creator,
             creator.reel1,
-            1
+            1,
+            "Reel 1"
         );
 
         html += buildCARow(
             creator,
             creator.reel2,
-            2
-        );
-
-        html += buildCARow(
-            creator,
-            creator.reel3,
-            3
+            2,
+            "Carousel 1"
         );
 
         html += `
@@ -242,9 +238,10 @@ function renderCreatorCards(creators){
 }
 
 function buildCARow(
-creator,
-reel,
-reelNumber
+    creator,
+    reel,
+    reelNumber,
+    title
 ){
 
     if(!reel.exists){
@@ -255,7 +252,7 @@ reelNumber
 
             <div class="creatorReelTitle">
 
-                Reel ${reelNumber}
+                ${title}
 
             </div>
 
@@ -270,11 +267,11 @@ reelNumber
                 <button
                     class="reviewButton"
                     onclick="openReelModal(
-                    '${creator.creatorID}',
-                    ${reelNumber}
+                        '${creator.creatorID}',
+                        ${reelNumber}
                     )">
 
-                    Submit Reel
+                    Submit
 
                 </button>
 
@@ -294,7 +291,7 @@ reelNumber
 
             <div class="creatorReelTitle">
 
-                Reel ${reelNumber}
+                ${title}
 
             </div>
 
@@ -307,11 +304,11 @@ reelNumber
             <div class="creatorReelActions">
 
                 <a
-                href="${reel.link}"
-                target="_blank"
-                class="viewReelButton">
+                    href="${reel.link}"
+                    target="_blank"
+                    class="viewReelButton">
 
-                    View Reel
+                    View
 
                 </a>
 
@@ -331,7 +328,7 @@ reelNumber
 
             <div class="creatorReelTitle">
 
-                Reel ${reelNumber}
+                ${title}
 
             </div>
 
@@ -344,11 +341,11 @@ reelNumber
             <div class="creatorReelActions">
 
                 <a
-                href="${reel.link}"
-                target="_blank"
-                class="viewReelButton">
+                    href="${reel.link}"
+                    target="_blank"
+                    class="viewReelButton">
 
-                    View Reel
+                    View
 
                 </a>
 
@@ -366,7 +363,7 @@ reelNumber
 
         <div class="creatorReelTitle">
 
-            Reel ${reelNumber}
+            ${title}
 
         </div>
 
@@ -381,8 +378,8 @@ reelNumber
             <button
                 class="reviewButton"
                 onclick="openReelModal(
-                '${creator.creatorID}',
-                ${reelNumber}
+                    '${creator.creatorID}',
+                    ${reelNumber}
                 )">
 
                 Resubmit
@@ -663,7 +660,7 @@ async function submitReel(){
 
     if(input.value.trim()==""){
 
-        alert("Please enter a Reel Link.");
+        alert("Please enter the post link.");
 
         return;
 
@@ -678,34 +675,23 @@ async function submitReel(){
         const response = await fetch(
 
             CONFIG.API_URL +
-
             "?action=submitReel" +
-
             "&creatorID=" +
-
             encodeURIComponent(CURRENT_CREATOR) +
-
             "&reelNumber=" +
-
             encodeURIComponent(CURRENT_REEL_NUMBER) +
-
             "&reelLink=" +
-
             encodeURIComponent(input.value.trim()) +
-
             "&submittedBy=" +
-
             encodeURIComponent(SESSION.name)
 
         );
 
-        const data =
-            await response.json();
+        const data = await response.json();
 
         if(data.success){
 
-            button.innerHTML =
-                "Submitted ✓";
+            button.innerHTML = "Submitted ✓";
 
             await new Promise(resolve=>setTimeout(resolve,800));
 
@@ -719,8 +705,7 @@ async function submitReel(){
 
             button.disabled = false;
 
-            button.innerHTML =
-                "Submit Reel";
+            button.innerHTML = "Submit";
 
             alert(data.message);
 
@@ -734,10 +719,9 @@ async function submitReel(){
 
         button.disabled = false;
 
-        button.innerHTML =
-            "Submit Reel";
+        button.innerHTML = "Submit";
 
-        alert("Unable to submit reel.");
+        alert("Unable to submit.");
 
     }
 
