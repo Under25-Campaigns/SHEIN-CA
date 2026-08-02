@@ -102,20 +102,31 @@ async function loadDashboard() {
 =========================================================== */
 
 function renderDashboard() {
+
     document.getElementById("totalCreators").innerHTML =
         CREATORS.length;
-    let reel1 = 0;
-    let reel2 = 0;
-    let reel3 = 0;
+
+    let reels = 0;
+    let carousels = 0;
+
     CREATORS.forEach(c => {
-        if (c.reel1.exists) reel1++;
-        if (c.reel2.exists) reel2++;
-        if (c.reel3.exists) reel3++;
+
+        if (c.reel1.exists)
+            reels++;
+
+        if (c.reel2.exists)
+            carousels++;
+
     });
-    document.getElementById("reel1Count").innerHTML = reel1;
-    document.getElementById("reel2Count").innerHTML = reel2;
-    document.getElementById("reel3Count").innerHTML = reel3;
+
+    document.getElementById("reelCount").innerHTML =
+        reels;
+
+    document.getElementById("carouselCount").innerHTML =
+        carousels;
+
     renderCreatorCards(CREATORS);
+
 }
 
 
@@ -215,14 +226,14 @@ function renderCreatorCards(creators){
             creator,
             creator.reel1,
             1,
-            "Reel 1"
+            "Reel"
         );
 
         html += buildCARow(
             creator,
             creator.reel2,
             2,
-            "Carousel 1"
+            "Carousel"
         );
 
         html += `
@@ -308,7 +319,7 @@ function buildCARow(
                     target="_blank"
                     class="viewReelButton">
 
-                    View
+                    View Post
 
                 </a>
 
@@ -345,7 +356,7 @@ function buildCARow(
                     target="_blank"
                     class="viewReelButton">
 
-                    View
+                    View Post
 
                 </a>
 
@@ -384,7 +395,7 @@ function buildCARow(
 
                 Resubmit
 
-            </button>
+                </button>
 
         </div>
 
@@ -619,19 +630,32 @@ function openReelModal(
     creatorID,
     reelNumber
 ){
+
     CURRENT_CREATOR = creatorID;
+
     CURRENT_REEL_NUMBER = reelNumber;
+
     document
         .getElementById("reelLink")
         .value = "";
+
     document
         .getElementById("reelTitle")
         .innerHTML =
-        "Submit Reel " + reelNumber;
+        reelNumber == 1
+            ? "Submit Reel"
+            : "Submit Carousel";
+
+    document
+        .getElementById("submitReelButton")
+        .innerHTML =
+        "Submit Post";
+
     document
         .getElementById("reelModal")
         .classList
         .remove("hidden");
+
 }
 
 function closeReelModal(){
