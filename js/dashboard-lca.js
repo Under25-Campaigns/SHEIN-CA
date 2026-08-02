@@ -112,26 +112,42 @@ function renderDashboard() {
     let approved = 0;
     let pending = 0;
     let rejected = 0;
+
     CAMPUS_AMBASSADORS.forEach(ca => {
+
         ca.creators.forEach(creator => {
-            creator.reels.forEach(reel => {
-                if (reel.status === "APPROVED")
+
+            creator.reels.forEach(post => {
+
+                if (post.status === "APPROVED") {
                     approved++;
-                if (reel.status === "PENDING")
+                }
+
+                if (post.status === "PENDING") {
                     pending++;
-                if (reel.status === "REJECTED")
+                }
+
+                if (post.status === "REJECTED") {
                     rejected++;
+                }
+
             });
+
         });
+
     });
 
     document.getElementById("approvedReels").innerHTML =
         approved;
+
     document.getElementById("pendingReels").innerHTML =
         pending;
+
     document.getElementById("rejectedReels").innerHTML =
         rejected;
+
     renderCACards(CAMPUS_AMBASSADORS);
+
 }
 
 document
@@ -175,7 +191,7 @@ function renderCACards(list){
             `
             ${ca.creators.length} Creators
             &nbsp;&nbsp;•&nbsp;&nbsp;
-            ${ca.totalApprovedReels} Reels
+            ${ca.totalApprovedReels} Posts
             &nbsp;&nbsp;•&nbsp;&nbsp;
             ${Number(ca.totalReferrals || 0).toLocaleString()} Referrals
             `;
@@ -251,15 +267,27 @@ function buildCreatorHTML(creators){
 
         `;
 
-        for(let i=1;i<=3;i++){
+        const postTypes = [
+            {
+                number: 1,
+                title: "Reel"
+            },
+            {
+                number: 2,
+                title: "Carousel"
+            }
+        ];
 
-            const reel = creator.reels.find(
+        postTypes.forEach(postType=>{
 
-                r => Number(r.reelNumber) === i
+            const post = creator.reels.find(
+
+                item =>
+                    Number(item.reelNumber) === postType.number
 
             );
 
-            if(!reel){
+            if(!post){
 
                 html += `
 
@@ -267,7 +295,7 @@ function buildCreatorHTML(creators){
 
                     <div class="creatorReelTitle">
 
-                        Reel ${i}
+                        ${postType.title}
 
                     </div>
 
@@ -287,11 +315,11 @@ function buildCreatorHTML(creators){
 
                 `;
 
-                continue;
+                return;
 
             }
 
-            if(reel.status==="PENDING"){
+            if(post.status==="PENDING"){
 
                 html += `
 
@@ -299,7 +327,7 @@ function buildCreatorHTML(creators){
 
                     <div class="creatorReelTitle">
 
-                        Reel ${i}
+                        ${postType.title}
 
                     </div>
 
@@ -312,17 +340,17 @@ function buildCreatorHTML(creators){
                     <div class="creatorReelActions">
 
                         <a
-                            href="${reel.reelLink || reel.link}"
+                            href="${post.reelLink || post.link}"
                             target="_blank"
                             class="viewReelButton">
 
-                            View Reel
+                            View Post
 
                         </a>
 
                         <button
                             class="reviewButton"
-                            onclick="openApprovalModal('${reel.reelID}')">
+                            onclick="openApprovalModal('${post.reelID}')">
 
                             Review
 
@@ -334,9 +362,11 @@ function buildCreatorHTML(creators){
 
                 `;
 
+                return;
+
             }
 
-            else if(reel.status==="APPROVED"){
+            if(post.status==="APPROVED"){
 
                 html += `
 
@@ -344,7 +374,7 @@ function buildCreatorHTML(creators){
 
                     <div class="creatorReelTitle">
 
-                        Reel ${i}
+                        ${postType.title}
 
                     </div>
 
@@ -357,11 +387,11 @@ function buildCreatorHTML(creators){
                     <div class="creatorReelActions">
 
                         <a
-                            href="${reel.reelLink || reel.link}"
+                            href="${post.reelLink || post.link}"
                             target="_blank"
                             class="viewReelButton">
 
-                            View Reel
+                            View Post
 
                         </a>
 
@@ -371,46 +401,44 @@ function buildCreatorHTML(creators){
 
                 `;
 
+                return;
+
             }
 
-            else{
+            html += `
 
-                html += `
+            <div class="creatorReelRow">
 
-                <div class="creatorReelRow">
+                <div class="creatorReelTitle">
 
-                    <div class="creatorReelTitle">
-
-                        Reel ${i}
-
-                    </div>
-
-                    <div class="creatorReelStatus statusRejected">
-
-                        Rejected
-
-                    </div>
-
-                    <div class="creatorReelActions">
-
-                        <a
-                            href="${reel.reelLink || reel.link}"
-                            target="_blank"
-                            class="viewReelButton">
-
-                            View Reel
-
-                        </a>
-
-                    </div>
+                    ${postType.title}
 
                 </div>
 
-                `;
+                <div class="creatorReelStatus statusRejected">
 
-            }
+                    Rejected
 
-        }
+                </div>
+
+                <div class="creatorReelActions">
+
+                    <a
+                        href="${post.reelLink || post.link}"
+                        target="_blank"
+                        class="viewReelButton">
+
+                        View Post
+
+                    </a>
+
+                </div>
+
+            </div>
+
+            `;
+
+        });
 
         html += `
 
@@ -437,17 +465,21 @@ function toggleCA(header){
     clicked.classList.toggle("open");
 }
 
-function openApprovalModal(reelID){
+function openApprovalModal(postID){
+
     CURRENT_REEL_ID =
-        reelID;
+        postID;
+
     document
-    .getElementById("approvalMessage")
-    .innerHTML =
-    "Approve or reject this reel?";
+        .getElementById("approvalMessage")
+        .innerHTML =
+        "Approve or reject this post?";
+
     document
-    .getElementById("approvalModal")
-    .classList
-    .remove("hidden");
+        .getElementById("approvalModal")
+        .classList
+        .remove("hidden");
+
 }
 
 function closeApprovalModal(){
