@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
+    <title>
+        SHEINVERSE Admin Dashboard
+    </title>
+    <link
+        rel="icon"
+        href="assets/favicon.png">
+    <link
+        rel="stylesheet"
+        href="css/dashboard.css">
+</head>
+<body>
+<div class="background"></div>
+<div class="overlay"></div>
+<!-- ===================================================== -->
+<!-- HEADER -->
+<!-- ===================================================== -->
+<header>
+    <div class="headerLeft">
+        <img
+            src="assets/logo.png"
+            class="logo">
+        <div>
+            <h1>
+                SHEINVERSE Admin Dashboard
+            </h1>
+            <p id="welcomeText">
+                Welcome
+            </p>
+        </div>
+    </div>
+    <div class="headerRight">
+        <button
+            id="refreshButton"
+            class="headerButton"
+            onclick="loadDashboard()">
+            Refresh
+        </button>
+        <button
+            class="headerButton logout"
+            onclick="logout()">
+            Logout
+        </button>
+    </div>
+</header>
+<!-- ===================================================== -->
+<!-- STATS -->
+<!-- ===================================================== -->
+<section class="statsContainer">
+    <div class="statCard">
+        <span>
+            Active LCAs
+        </span>
+        <h2 id="activeLCAs">
+            0
+        </h2>
+    </div>
+    <div class="statCard">
+        <span>
+            Active CAs
+        </span>
+        <h2 id="activeCAs">
+            0
+        </h2>
+    </div>
+        <div class="statCard">
+        <span>
+            Active Creators
+        </span>
+        <h2 id="activeCreators">
+            0
+        </h2>
+    </div>
+    <div class="statCard">
+        <span>
+            Approved Reels
+        </span>
+        <h2 id="approvedReels">
+            0
+        </h2>
+    </div>
+    <div class="statCard">
+        <span>
+            Approved Carousels
+        </span>
+        <h2 id="approvedCarousels">
+            0
+        </h2>
+    </div>
+    <div class="statCard">
+        <span>
+            Total Referrals
+        </span>
+        <h2 id="totalReferrals">
+            0
+        </h2>
+    </div>
+</section>
+<!-- ===================================================== -->
+<!-- SEARCH -->
+<!-- ===================================================== -->
+<section class="toolbar">
+    <input
+        id="searchCollege"
+        type="text"
+        placeholder="Search College, LCA, CA or Creator">
+</section>
+<!-- ===================================================== -->
+<!-- COLLEGE CARDS -->
+<!-- ===================================================== -->
+<section
+    id="collegeContainer"
+    class="creatorContainer">
+</section>
+<!-- ===================================================== -->
+<!-- COLLEGE TEMPLATE -->
+<!-- ===================================================== -->
+<template id="collegeTemplate">
+    <div class="creatorCard collegeCard">
+        <div
+            class="creatorHeader collegeHeader"
+            onclick="toggleCollege(this)">
+            <div>
+                <h3 class="collegeName">
+                </h3>
+                <div class="collegeStats">
+                </div>
+            </div>
+            <span class="expandIcon">
+                ▼
+            </span>
+        </div>
+        <div class="creatorBody collegeBody">
+            <div class="collegeDetails">
+            </div>
+        </div>
+    </div>
+</template>
+<!-- ===================================================== -->
+<!-- DEACTIVATE MODAL -->
+<!-- ===================================================== -->
+<div
+    id="deactivateModal"
+    class="modal hidden">
+    <div class="modalCard">
+        <h2 id="deactivateTitle">
+            Confirm Deactivation
+        </h2>
+        <p id="deactivateMessage">
+            Are you sure you want to deactivate this account?
+        </p>
+        <div class="modalButtons">
+            <button
+                class="secondaryButton"
+                onclick="closeDeactivateModal()">
+                Cancel
+            </button>
+            <button
+                id="confirmDeactivateButton"
+                class="primaryButton"
+                onclick="confirmDeactivation()">
+                Deactivate
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- ===================================================== -->
+<!-- SCRIPTS -->
+<!-- ===================================================== -->
+<script src="js/config.js"></script>
+<script src="js/dashboard-admin.js"></script>
+</body>
+</html>
