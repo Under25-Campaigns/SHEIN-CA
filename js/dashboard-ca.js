@@ -631,24 +631,31 @@ function openReelModal(
     reelNumber
 ){
 
-    CURRENT_CREATOR = creatorID;
+    CURRENT_CREATOR =
+        creatorID;
 
-    CURRENT_REEL_NUMBER = reelNumber;
+    CURRENT_REEL_NUMBER =
+        Number(reelNumber);
 
-    document
-        .getElementById("reelLink")
-        .value = "";
+    const input =
+        document.getElementById("reelLink");
 
-    document
-        .getElementById("reelTitle")
-        .innerHTML =
-        reelNumber == 1
+    const title =
+        document.getElementById("reelTitle");
+
+    const button =
+        document.getElementById("submitReelButton");
+
+    input.value = "";
+
+    title.innerHTML =
+        CURRENT_REEL_NUMBER === 1
             ? "Submit Reel"
             : "Submit Carousel";
 
-    document
-        .getElementById("submitReelButton")
-        .innerHTML =
+    button.disabled = false;
+
+    button.innerHTML =
         "Submit Post";
 
     document
@@ -659,16 +666,31 @@ function openReelModal(
 }
 
 function closeReelModal(){
+
     CURRENT_CREATOR = null;
+
     CURRENT_REEL = null;
+
     CURRENT_REEL_NUMBER = null;
+
+    document
+        .getElementById("reelLink")
+        .value = "";
+
+    const button =
+        document.getElementById("submitReelButton");
+
+    button.disabled = false;
+
+    button.innerHTML =
+        "Submit Post";
+
     document
         .getElementById("reelModal")
         .classList
         .add("hidden");
 
 }
-
 
 /* ===========================================================
    SUBMIT REEL
@@ -682,7 +704,21 @@ async function submitReel(){
     const input =
         document.getElementById("reelLink");
 
-    if(input.value.trim()==""){
+    const postLink =
+        input.value.trim();
+
+    if(
+        !CURRENT_CREATOR ||
+        !CURRENT_REEL_NUMBER
+    ){
+
+        alert("Post information is missing.");
+
+        return;
+
+    }
+
+    if(postLink === ""){
 
         alert("Please enter the post link.");
 
@@ -692,48 +728,67 @@ async function submitReel(){
 
     button.disabled = true;
 
-    button.innerHTML = "Submitting...";
+    button.innerHTML =
+        "Submitting...";
 
     try{
 
-        const response = await fetch(
+        const response =
+            await fetch(
 
-            CONFIG.API_URL +
-            "?action=submitReel" +
-            "&creatorID=" +
-            encodeURIComponent(CURRENT_CREATOR) +
-            "&reelNumber=" +
-            encodeURIComponent(CURRENT_REEL_NUMBER) +
-            "&reelLink=" +
-            encodeURIComponent(input.value.trim()) +
-            "&submittedBy=" +
-            encodeURIComponent(SESSION.name)
+                CONFIG.API_URL +
+                "?action=submitReel" +
+                "&creatorID=" +
+                encodeURIComponent(
+                    CURRENT_CREATOR
+                ) +
+                "&reelNumber=" +
+                encodeURIComponent(
+                    CURRENT_REEL_NUMBER
+                ) +
+                "&reelLink=" +
+                encodeURIComponent(
+                    postLink
+                ) +
+                "&submittedBy=" +
+                encodeURIComponent(
+                    SESSION.name
+                ) +
+                "&t=" +
+                Date.now()
 
-        );
+            );
 
-        const data = await response.json();
+        const data =
+            await response.json();
 
-        if(data.success){
-
-            button.innerHTML = "Submitted ✓";
-
-            await new Promise(resolve=>setTimeout(resolve,800));
-
-            closeReelModal();
-
-            await loadDashboard();
-
-        }
-
-        else{
+        if(!data.success){
 
             button.disabled = false;
 
-            button.innerHTML = "Submit";
+            button.innerHTML =
+                "Submit Post";
 
             alert(data.message);
 
+            return;
+
         }
+
+        button.innerHTML =
+            "Submitted ✓";
+
+        await new Promise(
+            resolve =>
+                setTimeout(
+                    resolve,
+                    800
+                )
+        );
+
+        closeReelModal();
+
+        await loadDashboard();
 
     }
 
@@ -743,7 +798,8 @@ async function submitReel(){
 
         button.disabled = false;
 
-        button.innerHTML = "Submit";
+        button.innerHTML =
+            "Submit Post";
 
         alert("Unable to submit.");
 
