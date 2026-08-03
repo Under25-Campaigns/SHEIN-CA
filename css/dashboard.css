@@ -1503,3 +1503,38 @@ font-weight:600;
 .adminCACard.open .adminExpandIcon{
     transform:rotate(180deg);
 }
+
+/* ===========================================================
+   ADMIN STATS - 6 CARDS IN ONE ROW
+=========================================================== */
+.adminStatsContainer{
+    display:grid;
+    grid-template-columns:repeat(6,minmax(0,1fr));
+    gap:22px;
+    width:100%;
+}
+
+.adminStatsContainer .statCard{
+    min-width:0;
+    padding:24px 20px;
+}
+
+.adminStatsContainer .statCard span{
+    font-size:14px;
+}
+
+.adminStatsContainer .statCard h2{
+    font-size:34px;
+}
+
+@media (max-width:1400px){
+    .adminStatsContainer{
+        grid-template-columns:repeat(3,minmax(0,1fr));
+    }
+}
+
+@media (max-width:768px){
+    .adminStatsContainer{
+        grid-template-columns:1fr;
+    }
+}
