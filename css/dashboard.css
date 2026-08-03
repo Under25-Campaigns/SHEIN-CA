@@ -1042,45 +1042,29 @@ font-weight:600;
 }
 
 .choose-file-btn{
-
     display:inline-flex;
     align-items:center;
     justify-content:center;
-
     padding:16px 28px;
-
     border-radius:18px;
-
     background:#fff;
-
     color:#111;
-
     font-size:20px;
     font-weight:700;
-
     cursor:pointer;
-
     transition:.25s;
 }
 
 .choose-file-btn:hover{
-
     transform:translateY(-2px);
-
     background:#f2f2f2;
-
 }
 
 #selectedFileName{
-
     color:#cfcfcf;
-
     font-size:18px;
-
     word-break:break-word;
-
     max-width:300px;
-
 }
 
 .caStats{
@@ -1088,10 +1072,8 @@ font-weight:600;
     align-items:center;
     gap:12px;
     margin-top:8px;
-
     font-size:18px;
     font-weight:600;
-
     color:rgba(255,255,255,.75);
 }
 
@@ -1100,80 +1082,424 @@ font-weight:600;
 }
 
 #orderCreator{
-
     width:100%;
-
     height:58px;
-
     border:none;
-
     outline:none;
-
     border-radius:18px;
-
     padding:0 20px;
-
     background:#343434;
-
     color:white;
-
     font-size:18px;
-
     margin-bottom:18px;
-
     appearance:none;
-
     -webkit-appearance:none;
-
     cursor:pointer;
-
 }
 
 #orderCreator option{
-
     background:#343434;
-
     color:white;
-
 }
 
-
 #creatorAssignedCA{
-
     width:100%;
-
     height:74px;
-
     border:none;
-
     outline:none;
-
     border-radius:22px;
-
     padding:0 28px;
-
     margin-bottom:28px;
-
     background:#343434;
-
     color:#ffffff;
-
     font-size:21px;
-
     font-weight:500;
-
     appearance:none;
-
     -webkit-appearance:none;
-
     cursor:pointer;
-
 }
 
 #creatorAssignedCA option{
-
     background:#343434;
-
     color:#ffffff;
+}
 
+/* ===========================================================
+   ADMIN DASHBOARD
+=========================================================== */
+.collegeCard{
+    overflow:hidden;
+}
+
+.collegeBody{
+    display:none;
+    animation:fadeIn .25s ease;
+}
+
+.collegeCard.open .collegeBody{
+    display:block;
+}
+
+.collegeHeader{
+    cursor:pointer;
+}
+
+.collegeStats{
+    margin-top:10px;
+    color:#bdbdbd;
+    font-size:15px;
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    align-items:center;
+}
+
+.collegeStats span{
+    opacity:.5;
+}
+
+.adminSectionLabel{
+    margin:28px 0 18px;
+    font-size:18px;
+    font-weight:700;
+    color:#ffffff;
+}
+
+.adminLCASection{
+    margin-bottom:24px;
+}
+
+.adminLCARow{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:14px 18px;
+    background:#2d2d2d;
+    border-radius:14px;
+    margin-bottom:10px;
+}
+
+.adminLCAName{
+    font-weight:600;
+    color:#fff;
+}
+
+.adminLCAReferrals{
+    color:#bdbdbd;
+}
+
+.adminCACard{
+    background:#2a2a2a;
+    border-radius:18px;
+    margin-bottom:16px;
+    overflow:hidden;
+    border:1px solid rgba(255,255,255,.06);
+}
+
+.adminCAHeader{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:20px 24px;
+    cursor:pointer;
+}
+
+.adminCAIdentity{
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+}
+
+.adminCAName{
+    color:#fff;
+    font-size:20px;
+    font-weight:700;
+}
+
+.adminCAStats{
+    color:#bdbdbd;
+    font-size:15px;
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+}
+
+.adminCAActions{
+    display:flex;
+    align-items:center;
+    gap:16px;
+}
+
+.adminExpandIcon{
+    font-size:20px;
+    color:#fff;
+}
+
+.adminCABody{
+    display:none;
+    padding:0 24px 24px;
+}
+
+.adminCACard.open .adminCABody{
+    display:block;
+}
+
+.adminCreatorRow{
+    display:grid;
+    grid-template-columns:minmax(220px,1fr) auto auto;
+    align-items:center;
+    gap:20px;
+    padding:18px 0;
+    border-top:1px solid rgba(255,255,255,.08);
+}
+
+.adminCreatorIdentity{
+    min-width:0;
+}
+
+.adminCreatorName{
+    color:#ffffff;
+    font-size:17px;
+    font-weight:700;
+    margin-bottom:7px;
+}
+
+.adminCreatorMeta{
+    display:flex;
+    flex-wrap:wrap;
+    align-items:center;
+    gap:9px;
+    color:#a9a9a9;
+    font-size:14px;
+}
+
+.adminCreatorMeta a{
+    color:#ffffff;
+    text-decoration:none;
+}
+
+.adminCreatorMeta a:hover{
+    text-decoration:underline;
+}
+
+.adminPostStatuses{
+    display:flex;
+    align-items:center;
+    flex-wrap:wrap;
+    justify-content:flex-end;
+    gap:12px;
+}
+
+.adminPostStatus{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    min-height:40px;
+    padding:10px 15px;
+    border-radius:12px;
+    font-size:14px;
+    font-weight:700;
+    text-decoration:none;
+    white-space:nowrap;
+    border:1px solid transparent;
+}
+
+.adminPostApproved{
+    color:#a9ffbd;
+    background:rgba(42,196,85,.12);
+    border-color:rgba(42,196,85,.28);
+}
+
+.adminPostPending{
+    color:#ffe58a;
+    background:rgba(255,196,0,.10);
+    border-color:rgba(255,196,0,.26);
+}
+
+.adminPostRejected{
+    color:#ffabab;
+    background:rgba(255,73,73,.10);
+    border-color:rgba(255,73,73,.26);
+}
+
+.adminDeactivateButton{
+    border:none;
+    outline:none;
+    border-radius:12px;
+    padding:11px 16px;
+    background:rgba(255,75,75,.14);
+    color:#ffb4b4;
+    font-size:14px;
+    font-weight:700;
+    cursor:pointer;
+    transition:.2s ease;
+    white-space:nowrap;
+}
+
+.adminDeactivateButton:hover{
+    background:rgba(255,75,75,.22);
+    transform:translateY(-1px);
+}
+
+.adminDeactivateButton:disabled{
+    opacity:.55;
+    cursor:not-allowed;
+    transform:none;
+}
+
+.adminEmptyState{
+    padding:26px;
+    text-align:center;
+    color:#a9a9a9;
+    background:rgba(255,255,255,.03);
+    border-radius:16px;
+}
+
+#deactivateMessage{
+    color:#cfcfcf;
+    font-size:17px;
+    line-height:1.6;
+    margin:10px 0 6px;
+}
+
+#confirmDeactivateButton{
+    background:#ffffff;
+    color:#111111;
+}
+
+#confirmDeactivateButton:disabled{
+    opacity:.6;
+    cursor:not-allowed;
+}
+
+/* ===========================================================
+   ADMIN RESPONSIVE
+=========================================================== */
+
+@media (max-width:1100px){
+    .adminCreatorRow{
+        grid-template-columns:1fr;
+        gap:14px;
+    }
+
+    .adminPostStatuses{
+        justify-content:flex-start;
+    }
+
+    .adminCAHeader{
+        flex-direction:column;
+        align-items:flex-start;
+        gap:18px;
+    }
+
+    .adminCAActions{
+        width:100%;
+        justify-content:space-between;
+    }
+
+    .adminLCARow{
+        flex-direction:column;
+        align-items:flex-start;
+        gap:8px;
+    }
+}
+
+@media (max-width:768px){
+
+    .collegeStats{
+        flex-direction:column;
+        align-items:flex-start;
+        gap:6px;
+    }
+
+    .collegeStats span{
+        display:none;
+    }
+
+    .adminCAStats{
+        flex-direction:column;
+        align-items:flex-start;
+        gap:6px;
+    }
+
+    .adminCAStats span{
+        display:none;
+    }
+
+    .adminCreatorMeta{
+        flex-direction:column;
+        align-items:flex-start;
+        gap:5px;
+    }
+
+    .adminCreatorMeta span{
+        display:none;
+    }
+
+    .adminPostStatuses{
+        flex-direction:column;
+        align-items:stretch;
+    }
+
+    .adminPostStatus{
+        width:100%;
+        justify-content:center;
+    }
+
+    .adminDeactivateButton{
+        width:100%;
+    }
+}
+
+.adminCreatorRow:last-child{
+    border-bottom:none;
+}
+
+.adminCABody{
+    border-top:1px solid rgba(255,255,255,.08);
+}
+
+.adminSectionLabel:first-child{
+    margin-top:0;
+}
+
+.adminPostApproved:hover{
+    background:rgba(42,196,85,.18);
+}
+
+.adminPostPending:hover{
+    background:rgba(255,196,0,.16);
+}
+
+.adminPostRejected:hover{
+    background:rgba(255,73,73,.16);
+}
+
+.adminPostStatus{
+    transition:.2s ease;
+}
+
+.adminPostStatus:hover{
+    transform:translateY(-1px);
+}
+
+.adminCAHeader:hover{
+    background:rgba(255,255,255,.02);
+}
+
+.collegeHeader:hover{
+    background:rgba(255,255,255,.02);
+}
+
+.adminExpandIcon,
+.expandIcon{
+    transition:transform .2s ease;
+}
+
+.collegeCard.open .expandIcon{
+    transform:rotate(180deg);
+}
+
+.adminCACard.open .adminExpandIcon{
+    transform:rotate(180deg);
 }
