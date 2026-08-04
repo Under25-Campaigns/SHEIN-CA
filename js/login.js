@@ -97,6 +97,18 @@ async function login() {
 
         }
 
+        const userAgent =
+            navigator.userAgent || "Unavailable";
+
+        const browserInfo =
+            detectBrowser(userAgent);
+
+        const osInfo =
+            detectOperatingSystem(userAgent);
+
+        const deviceInfo =
+            detectDevice(userAgent);
+
         const url =
 
             CONFIG.API_URL +
@@ -111,6 +123,18 @@ async function login() {
 
             "&ipAddress=" +
             encodeURIComponent(ipAddress) +
+
+            "&browser=" +
+            encodeURIComponent(browserInfo) +
+
+            "&os=" +
+            encodeURIComponent(osInfo) +
+
+            "&device=" +
+            encodeURIComponent(deviceInfo) +
+
+            "&userAgent=" +
+            encodeURIComponent(userAgent) +
 
             "&t=" +
             Date.now();
@@ -188,33 +212,23 @@ async function login() {
                 return;
 
             default:
-
                 localStorage.removeItem(
                     "SHEIN_SESSION"
                 );
-
                 showMessage(
                     "Unknown user role."
                 );
-
                 return;
-
         }
-
     }
 
     catch (error) {
-
         showLoader(false);
-
         console.error(error);
-
         showMessage(
             "Unable to connect to the server."
         );
-
     }
-
 }
 
 (function () {
