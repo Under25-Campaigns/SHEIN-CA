@@ -34,19 +34,28 @@ async function login() {
 
     showMessage("");
 
-    const username = usernameInput.value.trim();
-    const password = passwordInput.value.trim();
+    const username =
+        usernameInput.value.trim();
+
+    const password =
+        passwordInput.value.trim();
 
     if (!username || !password) {
 
-        showMessage("Please enter Username and Password.");
+        showMessage(
+            "Please enter Username and Password."
+        );
+
         return;
 
     }
 
     if (!CONFIG.API_URL) {
 
-        showMessage("Apps Script API URL has not been configured.");
+        showMessage(
+            "Apps Script API URL has not been configured."
+        );
+
         return;
 
     }
@@ -55,33 +64,98 @@ async function login() {
 
     try {
 
+        let ipAddress =
+            "Unavailable";
+
+        try {
+
+            const ipResponse =
+                await fetch(
+                    "https://api64.ipify.org?format=json"
+                );
+
+            if (ipResponse.ok) {
+
+                const ipData =
+                    await ipResponse.json();
+
+                ipAddress =
+                    String(
+                        ipData.ip || "Unavailable"
+                    ).trim();
+
+            }
+
+        }
+
+        catch (ipError) {
+
+            console.warn(
+                "Unable to retrieve IP address:",
+                ipError
+            );
+
+        }
+
         const url =
+
             CONFIG.API_URL +
+
             "?action=login" +
-            "&username=" + encodeURIComponent(username) +
-            "&password=" + encodeURIComponent(password);
 
-        const response = await fetch(url);
+            "&username=" +
+            encodeURIComponent(username) +
 
-        const data = await response.json();
+            "&password=" +
+            encodeURIComponent(password) +
+
+            "&ipAddress=" +
+            encodeURIComponent(ipAddress) +
+
+            "&t=" +
+            Date.now();
+
+        const response =
+            await fetch(url);
+
+        const data =
+            await response.json();
 
         showLoader(false);
 
         if (!data.success) {
 
             showMessage(data.message);
+
             return;
 
         }
 
         const session = {
 
-            username: data.username,
-            role: data.role,
-            name: data.name,
-            college: data.college,
-            assignedLCA: data.assignedLCA,
-            loginTime: Date.now()
+            username:
+                data.username,
+
+            role:
+                data.role,
+
+            name:
+                data.name,
+
+            college:
+                data.college,
+
+            assignedLCA:
+                data.assignedLCA,
+
+            referralCode:
+                data.referralCode,
+
+            referralCount:
+                data.referralCount,
+
+            loginTime:
+                Date.now()
 
         };
 
@@ -93,19 +167,36 @@ async function login() {
         switch (data.role) {
 
             case "ADMIN":
-                window.location.href = "dashboard-admin.html";
+
+                window.location.href =
+                    "dashboard-admin.html";
+
                 return;
 
             case "LCA":
-                window.location.href = "dashboard-lca.html";
+
+                window.location.href =
+                    "dashboard-lca.html";
+
                 return;
 
             case "CA":
-                window.location.href = "dashboard-ca.html";
+
+                window.location.href =
+                    "dashboard-ca.html";
+
                 return;
 
             default:
-                showMessage("Unknown user role.");
+
+                localStorage.removeItem(
+                    "SHEIN_SESSION"
+                );
+
+                showMessage(
+                    "Unknown user role."
+                );
+
                 return;
 
         }
@@ -118,7 +209,9 @@ async function login() {
 
         console.error(error);
 
-        showMessage("Unable to connect to the server.");
+        showMessage(
+            "Unable to connect to the server."
+        );
 
     }
 
