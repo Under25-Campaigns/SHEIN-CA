@@ -231,6 +231,115 @@ async function login() {
     }
 }
 
+function detectBrowser(userAgent) {
+
+    const ua =
+        String(userAgent || "");
+
+    let match;
+
+    if ((match = ua.match(/Edg\/([\d.]+)/))) {
+        return "Microsoft Edge " + match[1];
+    }
+
+    if ((match = ua.match(/OPR\/([\d.]+)/))) {
+        return "Opera " + match[1];
+    }
+
+    if ((match = ua.match(/CriOS\/([\d.]+)/))) {
+        return "Chrome iOS " + match[1];
+    }
+
+    if ((match = ua.match(/Chrome\/([\d.]+)/))) {
+        return "Chrome " + match[1];
+    }
+
+    if ((match = ua.match(/FxiOS\/([\d.]+)/))) {
+        return "Firefox iOS " + match[1];
+    }
+
+    if ((match = ua.match(/Firefox\/([\d.]+)/))) {
+        return "Firefox " + match[1];
+    }
+
+    if (
+        ua.includes("Safari") &&
+        (match = ua.match(/Version\/([\d.]+)/))
+    ) {
+        return "Safari " + match[1];
+    }
+
+    return "Unknown Browser";
+
+}
+
+
+function detectOperatingSystem(userAgent) {
+
+    const ua =
+        String(userAgent || "");
+
+    if (/Windows NT 10.0/.test(ua)) {
+        return "Windows 10/11";
+    }
+
+    if (/Windows NT 6.3/.test(ua)) {
+        return "Windows 8.1";
+    }
+
+    if (/Windows NT 6.1/.test(ua)) {
+        return "Windows 7";
+    }
+
+    if (/Android/.test(ua)) {
+
+        const match =
+            ua.match(/Android\s([\d.]+)/);
+
+        return match
+            ? "Android " + match[1]
+            : "Android";
+
+    }
+
+    if (/iPhone|iPad|iPod/.test(ua)) {
+
+        const match =
+            ua.match(/OS\s([\d_]+)/);
+
+        return match
+            ? "iOS " + match[1].replace(/_/g, ".")
+            : "iOS";
+
+    }
+
+    if (/Mac OS X/.test(ua)) {
+
+        const match =
+            ua.match(/Mac OS X\s([\d_]+)/);
+        return match
+            ? "macOS " + match[1].replace(/_/g, ".")
+            : "macOS";
+
+    }
+    if (/Linux/.test(ua)) {
+        return "Linux";
+    }
+    return "Unknown OS";
+}
+
+function detectDevice(userAgent) {
+    const ua =
+        String(userAgent || "");
+    if (/iPad|Tablet/.test(ua)) {
+        return "Tablet";
+    }
+    if (/Mobi|Android|iPhone|iPod/.test(ua)) {
+        return "Mobile";
+    }
+    return "Desktop";
+}
+
 (function () {
 
     const raw = localStorage.getItem("SHEIN_SESSION");
