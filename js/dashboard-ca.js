@@ -502,7 +502,22 @@ function toggleCreator(header) {
 =========================================================== */
 
 function openCreatorModal() {
+
     clearCreatorForm();
+
+    const errorBox =
+        document.getElementById("creatorError");
+
+    if (errorBox) {
+        errorBox.innerHTML = "";
+    }
+
+    const button =
+        document.getElementById("addCreatorButton");
+
+    button.disabled = false;
+    button.innerHTML = "Add Creator";
+
     document
         .getElementById("creatorModal")
         .classList
@@ -511,18 +526,41 @@ function openCreatorModal() {
 }
 
 function closeCreatorModal() {
+
+    const errorBox =
+        document.getElementById("creatorError");
+
+    if (errorBox) {
+        errorBox.innerHTML = "";
+    }
+
+    const button =
+        document.getElementById("addCreatorButton");
+
+    button.disabled = false;
+    button.innerHTML = "Add Creator";
+
     document
         .getElementById("creatorModal")
         .classList
         .add("hidden");
+
 }
 
 function clearCreatorForm() {
+
     document.getElementById("creatorName").value = "";
     document.getElementById("creatorPhone").value = "";
     document.getElementById("creatorEmail").value = "";
     document.getElementById("creatorInstagram").value = "";
     document.getElementById("creatorFollowers").value = "";
+
+    const errorBox =
+        document.getElementById("creatorError");
+
+    if (errorBox) {
+        errorBox.innerHTML = "";
+    }
 
 }
 
@@ -531,16 +569,54 @@ function clearCreatorForm() {
    ADD CREATOR
 =========================================================== */
 
-async function addCreator(){
+async function addCreator() {
 
     const button =
         document.getElementById("addCreatorButton");
 
-    button.disabled = true;
+    const errorBox =
+        document.getElementById("creatorError");
 
+    if (errorBox) {
+        errorBox.innerHTML = "";
+    }
+
+    const name =
+        document.getElementById("creatorName").value.trim();
+
+    const phone =
+        document.getElementById("creatorPhone").value.trim();
+
+    const email =
+        document.getElementById("creatorEmail").value.trim();
+
+    const instagram =
+        document.getElementById("creatorInstagram").value.trim();
+
+    const followers =
+        document.getElementById("creatorFollowers").value.trim();
+
+    if (
+        !name ||
+        !phone ||
+        !email ||
+        !instagram ||
+        !followers
+    ) {
+
+        if (errorBox) {
+            errorBox.innerHTML =
+                "Please complete all fields.";
+        }
+
+        return;
+
+    }
+
+    button.disabled = true;
     button.innerHTML = "Adding...";
 
-    try{
+    try {
 
         const response = await fetch(
 
@@ -549,35 +625,27 @@ async function addCreator(){
             "?action=addCreator" +
 
             "&name=" +
-
-            encodeURIComponent(document.getElementById("creatorName").value.trim()) +
+            encodeURIComponent(name) +
 
             "&phone=" +
-
-            encodeURIComponent(document.getElementById("creatorPhone").value.trim()) +
+            encodeURIComponent(phone) +
 
             "&email=" +
-
-            encodeURIComponent(document.getElementById("creatorEmail").value.trim()) +
+            encodeURIComponent(email) +
 
             "&instagram=" +
-
-            encodeURIComponent(document.getElementById("creatorInstagram").value.trim()) +
+            encodeURIComponent(instagram) +
 
             "&followers=" +
-
-            encodeURIComponent(document.getElementById("creatorFollowers").value.trim()) +
+            encodeURIComponent(followers) +
 
             "&college=" +
-
             encodeURIComponent(SESSION.college) +
 
             "&assignedLCA=" +
-
             encodeURIComponent(SESSION.assignedLCA) +
 
             "&assignedCA=" +
-
             encodeURIComponent(SESSION.name)
 
         );
@@ -585,39 +653,42 @@ async function addCreator(){
         const data =
             await response.json();
 
-        if(data.success){
+        if (data.success) {
 
             button.innerHTML = "Added ✓";
 
-            await new Promise(resolve=>setTimeout(resolve,800));
+            await new Promise(
+                resolve => setTimeout(resolve, 800)
+            );
 
             closeCreatorModal();
 
             await loadDashboard();
 
-        }
-
-        else{
+        } else {
 
             button.disabled = false;
-
             button.innerHTML = "Add Creator";
 
-            alert(data.message);
+            if (errorBox) {
+                errorBox.innerHTML =
+                    data.message ||
+                    "Unable to add creator.";
+            }
 
         }
 
-    }
-
-    catch(err){
+    } catch (err) {
 
         console.error(err);
 
         button.disabled = false;
-
         button.innerHTML = "Add Creator";
 
-        alert("Unable to add creator.");
+        if (errorBox) {
+            errorBox.innerHTML =
+                "Unable to add creator. Please try again.";
+        }
 
     }
 
